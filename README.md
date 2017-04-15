@@ -10,7 +10,7 @@ Community Driven SIEM
 ## Agent
 This is the application that collects and normalizes data. You can create as many of them as you need and point them to the Engine-API. Each agent has a set of normalization chains which contains a tree of normalizers. The agent takes a single input and normalizes it pulling out data into individual fields. The agent will then pool a number of normalizations together and zip them up before posting them to the Engine-API.
 
-An agent is started by specifying a unique identifier for the agent, it will then read the configuration file specified by the <unique identifier>.conf. Once the agent starts, depending on *how* you start the agent, it will load the configuration and then begin handling input based on which agent type you started the agent as.
+An agent is started by specifying a unique identifier for the agent, it will then read the configuration file specified by the identifier.conf. Once the agent starts, depending on *how* you start the agent, it will load the configuration and then begin handling input based on which agent type you started the agent as.
 
 When you first startup the agent, it is suggested to run the TestGeneratorAgent which will generate a number of logs to verify connectivity through the system.
 
@@ -21,15 +21,13 @@ There is no processing done with this layer, but is necessary to decouple the un
 
 TODO: The Engine-API should also provide an ability to download the agents configuration thus making it a simpler configuration mechansim.
 
-## Engine
-*TODO*
+## Engine *TODO*
 This application reads from the Queue, pushes into a short term database and processes the records in it. The application should have a set of rules for handling correlation and plugins. Any number of engines should be runnable to support a wider scale if more normalizations are being processed. Each rule which fires will have a corresponding action, actions are actually plug-ins which can be developed and deployed for an unlimited amount of functionality. Some built-in actions:
 
 * Drop
 * Set Priority
 
-## Action Plug-Ins
-*TODO*
+## Action Plug-Ins *TODO*
 These plug-ins will be responsible for handling actions when a specific rule fires. Some concepts are as follows but can be developed by request.
 
 * Write to Database
