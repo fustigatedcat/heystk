@@ -8,6 +8,7 @@ import akka.stream.ActorMaterializer
 import com.fustigatedcat.heystk.engine.dao.AgentDAO
 import com.fustigatedcat.heystk.engine.model.{AgentAuthorization, Agent}
 import com.fustigatedcat.heystk.engine.normalization.NormalizationHandler
+import com.fustigatedcat.heystk.engine.queue.RabbitQueue
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import com.typesafe.config.ConfigFactory
 import org.squeryl.{Session, SessionFactory}
@@ -48,9 +49,10 @@ object EngineAPI {
       authorize { agent =>
         post {
           entity(as[String]) { body =>
-            // b64decode -> gunzip -> post Normalizations
-            NormalizationHandler.handle(body)
-            complete("")
+            headerValueByName('Checksum) { chksum =>
+              NormalizationHandler.handle(body, chksum)
+              complete("")
+            }
           }
         }
       }
@@ -81,7 +83,8 @@ object EngineAPI {
   }
 
   def main(args : Array[String]) : Unit = {
-    implicit val system = ActorSystem("my-system")
+    RabbitQueue
+    implicit val system = ActorSystem("api-system")
     implicit val materializer = ActorMaterializer()
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher

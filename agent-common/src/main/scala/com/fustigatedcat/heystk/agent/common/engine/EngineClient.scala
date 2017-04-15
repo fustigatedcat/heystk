@@ -8,6 +8,7 @@ import com.fustigatedcat.heystk.agent.common.normalization.Normalization
 import com.typesafe.config.Config
 import dispatch.Http
 import org.apache.commons.codec.binary.Base64
+import org.apache.commons.codec.digest.DigestUtils
 import org.slf4j.LoggerFactory
 
 import org.json4s.native.parseJson
@@ -52,25 +53,27 @@ class EngineClient(config : Config) extends Actor {
     }
   }
 
-  def createBody() : String = {
+  def zipBody(body : String) : String = {
     val baos = new ByteArrayOutputStream()
     val gzipStream = new GZIPOutputStream(baos)
-    gzipStream.write(writePretty(normalizations).getBytes("UTF-8"))
+    gzipStream.write(body.getBytes("UTF-8"))
     gzipStream.close()
     Base64.encodeBase64String(baos.toByteArray)
   }
 
   def unauthenticatedPost() : Boolean = {
-    logger.debug("Not publishing, authorization key not provided {}", createBody())
+    logger.debug("Not publishing, authorization key not provided {}", zipBody(writePretty(normalizations)))
     normalizations = List()
     true
   }
 
   def realPost() : Boolean = auth match {
     case Some(a) => {
-      val req = (url(config.getString("engine.url")) / "normalizations" << createBody()).
+      val body = writePretty(normalizations)
+      val req = (url(config.getString("engine.url")) / "normalizations" << zipBody(body)).
         setHeader("Authorization", a).
-        setContentType("application/json", "UTF-8")
+        setContentType("application/json", "UTF-8").
+        setHeader("Checksum", DigestUtils.sha256Hex(body))
       Http(req OK as.String).option() match {
         case Some(resp) => {
           // we posted, yay!
