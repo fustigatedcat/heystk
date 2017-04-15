@@ -9,6 +9,8 @@ object TestGeneratorAgent extends Agent {
 
   lazy val count = this.config.getInt("agent.test-generator.count")
 
+  lazy val delay = this.config.getInt("agent.test-generator.delay")
+
   override def init(): Boolean = {
     true
   }
@@ -18,7 +20,7 @@ object TestGeneratorAgent extends Agent {
       for(c <- 0 until count) {
         this.normalize(Log(string))
       }
-      Thread.sleep(60 * 1000)
+      Thread.sleep(delay * 1000)
     }
     true
   }
