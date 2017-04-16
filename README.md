@@ -19,17 +19,20 @@ This application abstracts the underlying queueing mechanism, it receives the po
 
 There is no processing done with this layer, but is necessary to decouple the underlying Queue system from the Agent itself. Since at least one Agent will be installed on each system to be monitored (maybe more depending on how many components are being monitored) it's simpler to change an intermediary layer than it would be to have to redeploy or re-configure each Agent in the field.
 
-TODO: The Engine-API should also provide an ability to download the agents configuration thus making it a simpler configuration mechansim.
+*TODO*: The Engine-API should also provide an ability to download the agents configuration thus making it a simpler configuration mechansim.
 
 ## Engine *TODO*
 This application reads from the Queue, pushes into a short term database and processes the records in it. The application should have a set of rules for handling correlation and plugins. Any number of engines should be runnable to support a wider scale if more normalizations are being processed. Each rule which fires will have a corresponding action, actions are actually plug-ins which can be developed and deployed for an unlimited amount of functionality. Some built-in actions:
 
 * Drop
-* Set Priority
+* Store Long Term Storage
+* Correlate
+
+A rule can fire multiple actions however, a Normalization can only match one rule though.
 
 ## Action Plug-Ins *TODO*
 These plug-ins will be responsible for handling actions when a specific rule fires. Some concepts are as follows but can be developed by request.
 
-* Write to Database
+* Call into remote API
 * Send E-Mail
 * Create 'ticket'
