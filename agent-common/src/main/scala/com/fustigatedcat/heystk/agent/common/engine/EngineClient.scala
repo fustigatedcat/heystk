@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream
 import java.util.zip.GZIPOutputStream
 
 import akka.actor.Actor
-import com.fustigatedcat.heystk.agent.common.normalization.Normalization
+import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 import dispatch.Http
 import org.apache.commons.codec.binary.Base64

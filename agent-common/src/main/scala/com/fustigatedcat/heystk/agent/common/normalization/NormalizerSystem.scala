@@ -1,8 +1,8 @@
 package com.fustigatedcat.heystk.agent.common.normalization
 
-import java.time.LocalDateTime
 import java.util.Date
 
+import com.fustigatedcat.heystk.common.normalization.{Log, Normalization}
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 

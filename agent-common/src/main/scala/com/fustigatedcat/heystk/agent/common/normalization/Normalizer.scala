@@ -2,6 +2,7 @@ package com.fustigatedcat.heystk.agent.common.normalization
 
 import java.util.regex.Pattern
 
+import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 

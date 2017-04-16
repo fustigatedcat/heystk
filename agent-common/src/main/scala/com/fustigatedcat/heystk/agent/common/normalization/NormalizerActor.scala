@@ -1,6 +1,7 @@
 package com.fustigatedcat.heystk.agent.common.normalization
 
 import akka.actor.{ActorRef, Actor}
+import com.fustigatedcat.heystk.common.normalization.Log
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 

@@ -1,4 +1,4 @@
-package com.fustigatedcat.heystk.agent.common.normalization
+package com.fustigatedcat.heystk.common.normalization
 
 import java.util.Date
 

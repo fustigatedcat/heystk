@@ -3,6 +3,7 @@ package com.fustigatedcat.heystk.engine.normalization
 import java.io.ByteArrayInputStream
 import java.util.zip.GZIPInputStream
 
+import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.fustigatedcat.heystk.engine.queue.RabbitQueue
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.digest.DigestUtils

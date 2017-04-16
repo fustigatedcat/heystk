@@ -1,7 +1,7 @@
 package com.fustigatedcat.heystk
 
 import com.fustigatedcat.heystk.agent.common.Agent
-import com.fustigatedcat.heystk.agent.common.normalization.Log
+import com.fustigatedcat.heystk.common.normalization.Log
 
 object TestGeneratorAgent extends Agent {
 

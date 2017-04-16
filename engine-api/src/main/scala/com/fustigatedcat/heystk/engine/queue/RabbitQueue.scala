@@ -1,7 +1,7 @@
 package com.fustigatedcat.heystk.engine.queue
 
 import com.fustigatedcat.heystk.engine.EngineAPI
-import com.fustigatedcat.heystk.engine.normalization.Normalization
+import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.rabbitmq.client.{MessageProperties, BuiltinExchangeType, ConnectionFactory}
 import org.json4s.native.Serialization.write
 import org.slf4j.LoggerFactory

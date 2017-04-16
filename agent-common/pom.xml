@@ -55,6 +55,11 @@
       <groupId>net.databinder.dispatch</groupId>
       <artifactId>dispatch-core_${scala.maj.version}</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.fustigatedcat.heystk.common</groupId>
+      <artifactId>heystk-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

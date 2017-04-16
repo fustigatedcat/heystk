@@ -1,5 +1,6 @@
 package com.fustigatedcat.heystk.agent.common.normalization
 
+import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 

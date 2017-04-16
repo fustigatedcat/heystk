@@ -14,6 +14,7 @@
     <module>../agent-common</module>
     <module>../agent</module>
     <module>../engine-api</module>
+    <module>../heystk-common</module>
   </modules>
 
   <properties>

@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit
 import akka.actor.{Props, ActorSystem}
 import akka.routing.RoundRobinPool
 import com.fustigatedcat.heystk.agent.common.engine.EngineClient
-import com.fustigatedcat.heystk.agent.common.normalization.{NormalizerSystem, NormalizerActor, Log}
+import com.fustigatedcat.heystk.agent.common.normalization.{NormalizerSystem, NormalizerActor}
+import com.fustigatedcat.heystk.common.normalization.Log
 import com.typesafe.config.{ConfigFactory, Config}
 import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
