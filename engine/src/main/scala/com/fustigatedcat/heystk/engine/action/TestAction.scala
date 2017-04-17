@@ -1,5 +1,6 @@
 package com.fustigatedcat.heystk.engine.action
 
+import com.fustigatedcat.heystk.common.action.Action
 import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 
