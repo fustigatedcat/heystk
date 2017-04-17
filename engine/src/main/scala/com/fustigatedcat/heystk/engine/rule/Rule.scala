@@ -4,19 +4,22 @@ import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 
+import scala.collection.JavaConverters._
+
 object Rule {
 
   def create(config : Config) : Rule = {
     new Rule(
       config.getString("name"),
       config.getBoolean("enabled"),
-      RuleCriterion.create(config.getConfig("criterion"))
+      RuleCriterion.create(config.getConfig("criterion")),
+      config.getStringList("actions").asScala.toList
     )
   }
 
 }
 
-class Rule(name : String, enabled : Boolean, criterion : RuleCriterion) {
+class Rule(name : String, enabled : Boolean, criterion : RuleCriterion, val actions : List[String]) {
 
   val logger = LoggerFactory.getLogger(this.getClass)
 
