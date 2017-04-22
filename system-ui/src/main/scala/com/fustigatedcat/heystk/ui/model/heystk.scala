@@ -8,5 +8,7 @@ object heystk extends Schema {
 
   val Agent = table[Agent]
 
+  val User = table[User]
+
 }
 

@@ -6,7 +6,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource
 import net.liftweb.common.Full
 import net.liftweb.http.{S, LiftRules, Req, Html5Properties}
 import net.liftweb.http.provider.HTTPRequest
-import net.liftweb.sitemap.{Menu, SiteMap}
+import net.liftweb.sitemap._
 import net.liftweb.util.{LiftFlowOfControlException, LoanWrapper, Props}
 import org.slf4j.LoggerFactory
 import org.squeryl.adapters.MySQLAdapter
@@ -59,7 +59,9 @@ class Boot {
 
   def setupSiteMap : Boot = {
     LiftRules.setSiteMap(SiteMap(
-      Menu("index") / "index"
+      Menu("Home") / "index",
+      Menu("Login") / "login",
+      Menu("Static") / "static" / **
     ))
     this
   }

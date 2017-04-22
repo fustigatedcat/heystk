@@ -48,6 +48,10 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
     </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
