@@ -2,10 +2,12 @@ package bootstrap.liftweb
 
 import java.util.TimeZone
 
+import com.fustigatedcat.heystk.ui.snippet.LoggedInUser
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import net.liftweb.common.Full
-import net.liftweb.http.{S, LiftRules, Req, Html5Properties}
+import net.liftweb.http._
 import net.liftweb.http.provider.HTTPRequest
+import net.liftweb.sitemap.Loc.If
 import net.liftweb.sitemap._
 import net.liftweb.util.{LiftFlowOfControlException, LoanWrapper, Props}
 import org.slf4j.LoggerFactory
@@ -60,7 +62,8 @@ class Boot {
   def setupSiteMap : Boot = {
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("Login") / "login",
+      Menu("Login") / "login" >> If(() => LoggedInUser.is.isEmpty, () => RedirectResponse("/")),
+      Menu("Logout") / "logout" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Static") / "static" / **
     ))
     this
@@ -84,7 +87,7 @@ class Boot {
 
     LiftRules.early.append(makeUtf8)
 
-    //LiftRules.loggedInTest = Full(() => LoggedInUser.is.isDefined)
+    LiftRules.loggedInTest = Full(() => LoggedInUser.is.isDefined)
 
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
