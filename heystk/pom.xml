@@ -17,6 +17,7 @@
     <module>../engine</module>
     <module>../heystk-common</module>
     <module>../system-ui</module>
+    <module>../heystk-db</module>
   </modules>
 
   <properties>
@@ -38,7 +39,7 @@
     <lift.version>3.1.0-M2</lift.version>
   </properties>
 
-  <repositories>
+  <!-- repositories>
     <repository>
       <id>scala-tools.releases</id>
       <name>Scala-Tools Dependencies Repository for Releases</name>
@@ -52,14 +53,20 @@
       <name>Scala-Tools Plugins Repository for Releases</name>
       <url>http://scala-tools.org/repo-releases</url>
     </pluginRepository>
-  </pluginRepositories>
+  </pluginRepositories -->
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
+      <!-- dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-dist</artifactId>
         <version>${scala.version}</version>
+      </dependency -->
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library-all</artifactId>
+        <version>${scala.version}</version>
+        <type>pom</type>
       </dependency>
       <dependency>
         <groupId>org.scalatest</groupId>
@@ -142,6 +149,7 @@
         <artifactId>maven-scala-plugin</artifactId>
         <version>2.13.1</version>
         <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
           <jvmArgs>
             <jvmArg>-Xmx1024m</jvmArg>
             <jvmArg>-DpackageLinkDefs=file://${project.build.directory}/packageLinkDefs.properties</jvmArg>

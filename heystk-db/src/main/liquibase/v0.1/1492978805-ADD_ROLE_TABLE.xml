@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1492978805-ADD_ROLE_TABLE" context="heystk">
+        <createTable tableName="Role" schemaName="heystk" remarks="Table to hold all roles">
+            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints unique="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

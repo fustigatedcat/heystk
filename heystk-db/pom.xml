@@ -5,8 +5,8 @@
 
   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.fustigatedcat.heystk.engine</groupId>
-  <artifactId>engine-api</artifactId>
+  <groupId>com.fustigatedcat.heystk.db</groupId>
+  <artifactId>heystk-db</artifactId>
 
   <parent>
     <groupId>com.fustigatedcat.heystk</groupId>
@@ -25,8 +25,8 @@
       <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_${scala.maj.version}</artifactId>
+      <groupId>net.liftweb</groupId>
+      <artifactId>lift-mapper_${scala.maj.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>com.typesafe</groupId>
@@ -35,14 +35,6 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.json4s</groupId>
-      <artifactId>json4s-native_${scala.maj.version}</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-http_${scala.maj.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>org.squeryl</groupId>
@@ -57,28 +49,29 @@
       <artifactId>c3p0</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.json4s</groupId>
-      <artifactId>json4s-native_${scala.maj.version}</artifactId>
-    </dependency>
-    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.rabbitmq</groupId>
-      <artifactId>amqp-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fustigatedcat.heystk.common</groupId>
-      <artifactId>heystk-common</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.0.5</version>
+        <configuration>
+          <propertyFile>src/main/liquibase/liquibase.properties</propertyFile>
+        </configuration>
+        <!-- executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions -->
+      </plugin>
+    </plugins>
   </build>
 </project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1493086017-ADD_AGENT_TABLE" context="heystk">
+        <createTable tableName="Agent" schemaName="heystk" remarks="Table to hold agent information">
+            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints unique="true" />
+            </column>
+            <column name="created" type="DATETIME" />
+            <column name="last_updated" type="DATETIME" />
+            <column name="authentication" type="VARCHAR(512)">
+                <constraints unique="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

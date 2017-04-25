@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1492978969-CREATE_RBAC_MAPPINGS" context="heystk">
+        <createTable tableName="RolePrivilegeMap" schemaName="heystk" remarks="Table mapping Role to Privileges">
+            <column name="role_id" type="INT UNSIGNED" />
+            <column name="privilege_id" type="INT UNSIGNED" />
+        </createTable>
+        <addForeignKeyConstraint baseTableName="RolePrivilegeMap"
+                                 baseColumnNames="role_id"
+                                 constraintName="Role_RolePrivilegeMap_fk"
+                                 referencedTableName="Role"
+                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="RolePrivilegeMap"
+                                 baseColumnNames="privilege_id"
+                                 constraintName="Privilege_RolePrivilegeMap_fk"
+                                 referencedTableName="Privilege"
+                                 referencedColumnNames="id" />
+
+        <createTable tableName="UserRoleMap" schemaName="heystk" remarks="Table mapping Users to Roles">
+            <column name="user_id" type="INT UNSIGNED" />
+            <column name="role_id" type="INT UNSIGNED" />
+        </createTable>
+        <addForeignKeyConstraint baseTableName="UserRoleMap"
+                                 baseColumnNames="user_id"
+                                 constraintName="User_UserRoleMap_fk"
+                                 referencedTableName="User"
+                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="UserRoleMap"
+                                 baseColumnNames="role_id"
+                                 constraintName="Role_UserRoleMap_fk"
+                                 referencedTableName="Role"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

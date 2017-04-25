@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <include relativeToChangelogFile="true" file="1492977544-ADD_USER_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1492978662-ADD_PRIVILEGE_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1492978805-ADD_ROLE_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1492978969-CREATE_RBAC_MAPPINGS.xml"/>
+    <include relativeToChangelogFile="true" file="1493086017-ADD_AGENT_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1493086227-ADD_AGENTAUTHORIZATION_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1493086684-CREATE_ADMIN_USER.xml"/>
+
+</databaseChangeLog>

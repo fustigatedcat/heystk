@@ -20,9 +20,14 @@
   </properties>
 
   <dependencies>
-    <dependency>
+    <!-- dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-dist</artifactId>
+    </dependency -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library-all</artifactId>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>net.liftweb</groupId>
