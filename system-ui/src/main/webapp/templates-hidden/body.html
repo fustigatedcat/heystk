@@ -23,14 +23,14 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <lift:testCond.loggedIn>
-                            <li class="dropdown" uib-dropdown>
+                            <li class="lift:userSnippet.ifAdminMenuAvailable dropdown" uib-dropdown>
                                 <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                                 <ul class="dropdown-menu" uib-dropdown-menu>
-                                    <li><a href="/admin-users">Users</a></li>
+                                    <li class="lift:UserSnippet.ifCanViewUsers"><a href="/admin-users">Users</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown" uib-dropdown>
-                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="lift:UserSnippet.loggedInUser"><span id="name"></span></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" uib-dropdown-menu>
                                     <li><a href="/profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>

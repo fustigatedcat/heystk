@@ -10,5 +10,13 @@ object heystk extends Schema {
 
   val User = table[User]
 
+  val Privilege = table[Privilege]
+
+  val Role = table[Role]
+
+  val RolePrivilegeMap = table[RolePrivilegeMap]
+
+  val UserRoleMap = table[UserRoleMap]
+
 }
 

@@ -1,6 +1,6 @@
 package com.fustigatedcat.heystk.ui.dao
 
-import com.fustigatedcat.heystk.ui.model.{heystk, User}
+import com.fustigatedcat.heystk.ui.model.{Privilege, heystk, User}
 
 import com.fustigatedcat.heystk.ui.model.UITypeMode._
 import org.apache.commons.codec.digest.DigestUtils
@@ -24,6 +24,14 @@ object UserDAO {
       where(u.username === username)
         select u
     ).headOption.filter(authenticate(password))
+  }
+
+  def getPrivilegesForUser(user : User) : List[String] = {
+    join(heystk.UserRoleMap,heystk.RolePrivilegeMap,heystk.Privilege)((urm,rpm,p) =>
+      where(urm.userId === user.id)
+        select p.name
+        on(urm.roleId === rpm.roleId, rpm.privilegeId === p.id)
+    ).distinct.toList
   }
 
 }
