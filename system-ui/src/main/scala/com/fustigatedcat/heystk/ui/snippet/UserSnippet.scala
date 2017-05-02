@@ -1,17 +1,14 @@
 package com.fustigatedcat.heystk.ui.snippet
 
 import com.fustigatedcat.heystk.ui.dao.UserDAO
+import com.fustigatedcat.heystk.ui.lib.Authorization
 import net.liftweb.json.parseOpt
 import net.liftweb.http.js.JE._
 import net.liftweb.http.js.{JsCmd, JE, JsCmds}
-import net.liftweb.http.{GUIDJsExp, SHtml, S, RequestVar}
+import net.liftweb.http.{GUIDJsExp, SHtml, S}
 import net.liftweb.util._, Helpers._
 
 import scala.xml.NodeSeq
-
-object UserPrivileges extends RequestVar[List[String]]({
-  LoggedInUser.is.map(UserDAO.getPrivilegesForUser).getOrElse(List())
-})
 
 object UserSnippet {
 
@@ -20,26 +17,18 @@ object UserSnippet {
   val adminMenuPrivileges = List("VIEW_USERS")
 
   def ifAdminMenuAvailable(xhtml : NodeSeq) : NodeSeq = {
-    if(adminMenuPrivileges.exists(UserPrivileges.is.contains)) {
-      xhtml
-    } else {
-      NodeSeq.Empty
-    }
+    Authorization.userAuthorized(adminMenuPrivileges, xhtml, NodeSeq.Empty)
   }
 
   def ifCanViewUsers(xhtml : NodeSeq) : NodeSeq = {
-    if(UserPrivileges.is.contains("VIEW_USERS")) {
-      xhtml
-    } else {
-      NodeSeq.Empty
-    }
+    Authorization.userAuthorized("VIEW_USERS", xhtml, NodeSeq.Empty)
   }
 
   def loggedInUser() : CssSel = "#name" #> LoggedInUser.is.map(u => {
     if(u.lastName.isEmpty) { u.firstName } else { s"${u.firstName} ${u.lastName}" }
   }).getOrElse("Unknown")
 
-  def checkUserNameExists() : CssSel = "*" #> (if(UserPrivileges.is.contains("CREATE_USER")) {
+  def checkUserNameExists() : CssSel = "*" #> Authorization.userAuthorized("CREATE_USER",
     S.attr("callback").map(callback => {
       def _doesUserNameExist(name : String) : JsCmd = {
         JE.Call(
@@ -49,12 +38,11 @@ object UserSnippet {
       }
       val GUIDJsExp(_, js) = SHtml.ajaxCall(JsVar("username"), _doesUserNameExist)
       JsCmds.Script(JsCmds.Function("checkUserNameExists", List("username"), js.cmd))
-    }).getOrElse(NodeSeq.Empty)
-  } else {
+    }).getOrElse(NodeSeq.Empty),
     NodeSeq.Empty
-  })
+  )
 
-  def getUserList() : CssSel = "*" #> (if(UserPrivileges.is.contains("VIEW_USERS")) {
+  def getUserList() : CssSel = "*" #> Authorization.userAuthorized("VIEW_USERS",
     S.attr("callback").map(callback => {
       def _getUserList() : JsCmd = {
         JE.Call(
@@ -76,12 +64,11 @@ object UserSnippet {
           SHtml.ajaxInvoke(_getUserList).cmd
         )
       )
-    }).getOrElse(NodeSeq.Empty)
-  } else {
+    }).getOrElse(NodeSeq.Empty),
     NodeSeq.Empty
-  })
+  )
 
-  def createUser() : CssSel = "*" #> (if(UserPrivileges.is.contains("CREATE_USER")) {
+  def createUser() : CssSel = "*" #> Authorization.userAuthorized("CREATE_USER",
     S.attr("callback").map(callback => {
       def _createUser(js : String) : JsCmd = parseOpt(js).map(js => {
         UserDAO.createUser(
@@ -99,12 +86,11 @@ object UserSnippet {
           SHtml.ajaxCall(Stringify(JsVar("user")), _createUser).cmd
         )
       )
-    }).getOrElse(NodeSeq.Empty)
-  } else {
+    }).getOrElse(NodeSeq.Empty),
     NodeSeq.Empty
-  })
+  )
 
-  def deleteUsers() : CssSel = "*" #> (if(UserPrivileges.is.contains("DELETE_USER")) {
+  def deleteUsers() : CssSel = "*" #> Authorization.userAuthorized("DELETE_USER",
     S.attr("callback").map(callback => {
       def _deleteUsers(js : String) : JsCmd = parseOpt(js).map(js => {
         UserDAO.deleteUsers(js.extract[List[Long]])
@@ -117,9 +103,8 @@ object UserSnippet {
           SHtml.ajaxCall(Stringify(JsVar("ids")), _deleteUsers).cmd
         )
       )
-    }).getOrElse(NodeSeq.Empty)
-  } else {
+    }).getOrElse(NodeSeq.Empty),
     NodeSeq.Empty
-  })
+  )
 
 }

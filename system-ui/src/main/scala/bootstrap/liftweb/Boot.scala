@@ -2,7 +2,8 @@ package bootstrap.liftweb
 
 import java.util.TimeZone
 
-import com.fustigatedcat.heystk.ui.snippet.{UserPrivileges, LoggedInUser}
+import com.fustigatedcat.heystk.ui.lib.Authorization
+import com.fustigatedcat.heystk.ui.snippet.LoggedInUser
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import net.liftweb.common.Full
 import net.liftweb.http._
@@ -64,7 +65,7 @@ class Boot {
       Menu("Home") / "index",
       Menu("Login") / "login" >> If(() => LoggedInUser.is.isEmpty, () => RedirectResponse("/")),
       Menu("Logout") / "logout" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
-      Menu("User Admin") / "admin-users" >> If(() => UserPrivileges.is.contains("VIEW_USERS"), () => RedirectResponse("/")),
+      Menu("User Admin") / "admin-users" >> If(() => Authorization.userHasPrivilege("VIEW_USERS"), () => RedirectResponse("/")),
       Menu("Static") / "static" / **
     ))
     this
