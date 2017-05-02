@@ -1,5 +1,8 @@
 package com.fustigatedcat.heystk.ui.dao
 
+import java.sql.Timestamp
+import java.util.Calendar
+
 import com.fustigatedcat.heystk.ui.model.{Privilege, heystk, User}
 
 import com.fustigatedcat.heystk.ui.model.UITypeMode._
@@ -36,6 +39,25 @@ object UserDAO {
 
   def getUserList() : List[User] = {
     heystk.User.allRows.toList.sortBy(_.id)
+  }
+
+  def getUserByUsername(username : String) : Option[User] = {
+    heystk.User.where(u => u.username === username).headOption
+  }
+
+  def createUser(username : String, firstName : String, lastName : String, password : String) : User = {
+    val salt = createSalt()
+    heystk.User.insert(
+      User(
+        0,
+        username,
+        firstName,
+        lastName,
+        salt,
+        hash(password, salt),
+        new Timestamp(Calendar.getInstance.getTimeInMillis)
+      )
+    )
   }
 
 }

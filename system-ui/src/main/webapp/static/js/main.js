@@ -1,3 +1,5 @@
+function getContext() { return '/heystk'; }
+
 angular.
     module(
         "heystk",

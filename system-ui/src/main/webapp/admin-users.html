@@ -3,6 +3,8 @@
         <title>heystk - User Administration</title>
         <script src="/static/js/admin-user.js"></script>
         <script class="lift:UserSnippet.getUserList?callback=loadUsers"></script>
+        <script class="lift:UserSnippet.checkUserNameExists?callback=checkUserNameExistsCb"></script>
+        <script class="lift:UserSnippet.createUser?callback=userCreated"></script>
     </head_merge>
     <section class="container" ng-controller="UserAdminController">
         <input type="button" class="btn btn-primary" value="New User" ng-click="newUser()" />
@@ -11,11 +13,13 @@
                 <th>Username</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Created</th>
             </tr>
             <tr ng-repeat="user in users">
                 <td>{{user.username}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
+                <td>{{user.created | date :'MM/dd/yyyy h:mma'}}</td>
             </tr>
         </table>
     </section>

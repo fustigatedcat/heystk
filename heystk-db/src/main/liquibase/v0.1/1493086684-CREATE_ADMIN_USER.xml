@@ -12,6 +12,7 @@
             <column name="hash" value="81d883a9c58e10941ba435b1b8317dc1b51f55fa6744f7895643c0076a60a1d8" />
             <column name="first_name" value="Administrator" />
             <column name="last_name" value="" />
+            <column name="created" valueDate="UTC_TIMESTAMP()" />
         </insert>
 
         <insert tableName="Role" schemaName="heystk">

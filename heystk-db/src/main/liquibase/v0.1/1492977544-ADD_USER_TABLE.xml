@@ -16,6 +16,7 @@
             <column name="hash" type="VARCHAR(64)" />
             <column name="first_name" type="VARCHAR(32)" />
             <column name="last_name" type="VARCHAR(32)" />
+            <column name="created" type="DATETIME" />
         </createTable>
     </changeSet>
 

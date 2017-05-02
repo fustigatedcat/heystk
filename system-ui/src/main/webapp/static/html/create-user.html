@@ -1,3 +1,29 @@
-<section>
-    <h1>Foo</h1>
+<section class="container">
+    <h1>Create User</h1>
+    <p ng-if="passwordsNotMatch()" class="text-danger">Passwords Do Not Match!</p>
+    <p ng-if="usernameExists" class="text-danger">Username Already Exists!</p>
+    <section class="row">
+        <section class="col-lg-3"><label for="username">Username</label></section>
+        <section class="col-lg-3"><input id="username" type="text" ng-model="username" ng-change="usernameChanged()" placeholder="jappleseed"/></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="firstName">First Name</label></section>
+        <section class="col-lg-3"><input id="firstName" type="text" ng-model="firstName" placeholder="Johnny"/></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="lastName">Last Name</label></section>
+        <section class="col-lg-3"><input id="lastName" type="text" ng-model="lastName" placeholder="Appleseed"/></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="password">Password</label></section>
+        <section class="col-lg-3"><input id="password" type="password" ng-model="password" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="reenter">Re-Enter Password</label></section>
+        <section class="col-lg-3"><input id="reenter" type="password" ng-model="reenter" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()"/></section>
+        <section class="col-lg-3"><input type="button" class="btn btn-primary" ng-disabled="!isRecordValid()" value="Create" ng-click="create()"/></section>
+    </section>
 </section>
