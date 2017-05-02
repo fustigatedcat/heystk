@@ -65,7 +65,8 @@ class Boot {
       Menu("Home") / "index",
       Menu("Login") / "login" >> If(() => LoggedInUser.is.isEmpty, () => RedirectResponse("/")),
       Menu("Logout") / "logout" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
-      Menu("User Admin") / "admin-users" >> If(() => Authorization.userHasPrivilege("VIEW_USERS"), () => RedirectResponse("/")),
+      Menu("User List") / "users" >> If(() => Authorization.userHasPrivilege("VIEW_USERS"), () => RedirectResponse("/")),
+      Menu("Agent List") / "agents" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Static") / "static" / **
     ))
     this

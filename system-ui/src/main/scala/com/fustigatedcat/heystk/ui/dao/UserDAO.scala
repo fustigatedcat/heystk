@@ -37,7 +37,7 @@ object UserDAO {
     ).distinct.toList
   }
 
-  def getUserList() : List[User] = {
+  def getUserList : List[User] = {
     heystk.User.allRows.toList.sortBy(_.id)
   }
 

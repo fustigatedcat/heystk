@@ -1,0 +1,25 @@
+<lift:surround with="body" at="body">
+    <head_merge>
+        <title>heystk - Agents</title>
+        <script src="/static/js/agents.js"></script>
+        <script class="lift:AgentSnippet.getAgentList?callback=loadAgents"></script>
+    </head_merge>
+    <section class="container">
+        <section class="container" ng-controller="AgentsController">
+            <table class="table table-bordered">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Agent Key</th>
+                </tr>
+                <tr ng-repeat="agent in agents">
+                    <td><input type="checkbox" ng-model="agent.selected" /></td>
+                    <td>{{agent.name}}</td>
+                    <td>{{agent.created | date :'MM/dd/yyyy h:mma'}}</td>
+                    <td><textarea readonly="readonly">{{agent.authentication}}</textarea></td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</lift:surround>
