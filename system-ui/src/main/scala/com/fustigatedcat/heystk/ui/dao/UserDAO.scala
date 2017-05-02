@@ -60,4 +60,8 @@ object UserDAO {
     )
   }
 
+  def deleteUsers(ids : List[Long]) : Unit = {
+    heystk.User.deleteWhere(u => u.id in ids)
+  }
+
 }

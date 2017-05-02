@@ -13,12 +13,14 @@
                                  baseColumnNames="role_id"
                                  constraintName="Role_RolePrivilegeMap_fk"
                                  referencedTableName="Role"
-                                 referencedColumnNames="id" />
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
         <addForeignKeyConstraint baseTableName="RolePrivilegeMap"
                                  baseColumnNames="privilege_id"
                                  constraintName="Privilege_RolePrivilegeMap_fk"
                                  referencedTableName="Privilege"
-                                 referencedColumnNames="id" />
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
 
         <createTable tableName="UserRoleMap" schemaName="heystk" remarks="Table mapping Users to Roles">
             <column name="user_id" type="INT UNSIGNED" />
@@ -28,12 +30,14 @@
                                  baseColumnNames="user_id"
                                  constraintName="User_UserRoleMap_fk"
                                  referencedTableName="User"
-                                 referencedColumnNames="id" />
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
         <addForeignKeyConstraint baseTableName="UserRoleMap"
                                  baseColumnNames="role_id"
                                  constraintName="Role_UserRoleMap_fk"
                                  referencedTableName="Role"
-                                 referencedColumnNames="id" />
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
     </changeSet>
 
 </databaseChangeLog>

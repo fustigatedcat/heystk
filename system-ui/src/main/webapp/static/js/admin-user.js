@@ -21,7 +21,7 @@ angular.
                                 $scope.usernameExists = rtn;
                                 $scope.$apply();
                             };
-                            userCreated = function(rtn) {
+                            userCreated = function() {
                                 getUserList();
                                 modal.close();
                                 $scope.$spply();
@@ -60,6 +60,21 @@ angular.
                         }
                     });
                 };
+                $scope.deleteUsers = function() {
+                    deleteUsers($scope.users.filter(function(u) { return u.selected; }).map(function(u) { return u.id; }));
+                };
+                $scope.userSelected = function() {
+                    for(var i in $scope.users) {
+                        if($scope.users.hasOwnProperty(i)) {
+                            if($scope.users[i].selected) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+                $scope.canCreateUser = function() { return createUser != null; };
+                $scope.canDeleteUsers = function() { return deleteUsers != null; };
                 loadUsers = function(users) { $scope.$apply(function() { $scope.users = users; }); };
                 getUserList();
             }

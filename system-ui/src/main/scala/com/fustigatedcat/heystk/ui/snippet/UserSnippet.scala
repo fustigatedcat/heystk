@@ -1,16 +1,11 @@
 package com.fustigatedcat.heystk.ui.snippet
 
-import java.text.SimpleDateFormat
-
 import com.fustigatedcat.heystk.ui.dao.UserDAO
-import com.fustigatedcat.heystk.ui.model.User
 import net.liftweb.json.parseOpt
 import net.liftweb.http.js.JE._
 import net.liftweb.http.js.{JsCmd, JE, JsCmds}
 import net.liftweb.http.{GUIDJsExp, SHtml, S, RequestVar}
 import net.liftweb.util._, Helpers._
-
-import net.liftweb.json.JsonDSL._
 
 import scala.xml.NodeSeq
 
@@ -102,6 +97,24 @@ object UserSnippet {
           "createUser",
           List("user"),
           SHtml.ajaxCall(Stringify(JsVar("user")), _createUser).cmd
+        )
+      )
+    }).getOrElse(NodeSeq.Empty)
+  } else {
+    NodeSeq.Empty
+  })
+
+  def deleteUsers() : CssSel = "*" #> (if(UserPrivileges.is.contains("DELETE_USER")) {
+    S.attr("callback").map(callback => {
+      def _deleteUsers(js : String) : JsCmd = parseOpt(js).map(js => {
+        UserDAO.deleteUsers(js.extract[List[Long]])
+        JE.Call(callback).cmd
+      }).getOrElse(JsCmds.Alert("Invalid List"))
+      JsCmds.Script(
+        JsCmds.Function(
+          "deleteUsers",
+          List("ids"),
+          SHtml.ajaxCall(Stringify(JsVar("ids")), _deleteUsers).cmd
         )
       )
     }).getOrElse(NodeSeq.Empty)
