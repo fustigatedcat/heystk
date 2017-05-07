@@ -1,0 +1,41 @@
+<section class="container">
+    <h1>Create Agent</h1>
+    <section class="row">
+        <section class="col-lg-3"><label for="name">Name</label></section>
+        <section class="col-lg-3"><input id="name" type="text" ng-model="name" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="engine-url">Engine URL</label></section>
+        <section class="col-lg-3"><input id="engine-url" type="url" ng-model="engineUrl" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="max-cache">Max Cache</label></section>
+        <section class="col-lg-3"><input id="max-cache" type="number" min="1" ng-model="maxCache" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="max-delay">Max Delay</label></section>
+        <section class="col-lg-3"><input id="max-delay" type="number" min="1" ng-model="maxDelay" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label>Type</label></section>
+        <section class="col-lg-3">
+            <label>
+                <input type="radio" ng-model="type" value="NONE" />
+                None
+            </label>
+            <label>
+                <input type="radio" ng-model="type" value="FILE_READER" />
+                File Reader
+            </label>
+        </section>
+    </section>
+    <hr />
+    <section class="row" ng-show="type == 'FILE_READER'">
+        <section class="col-lg-3"><label for="file-path">File Path</label></section>
+        <section class="col-lg-3"><input id="file-path" type="text" ng-model="filePath" placeholder="/var/log/syslog" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()"/></section>
+        <section class="col-lg-3"><input type="button" class="btn btn-primary" ng-disabled="!isRecordValid()" value="Create" ng-click="create()"/></section>
+    </section>
+</section>

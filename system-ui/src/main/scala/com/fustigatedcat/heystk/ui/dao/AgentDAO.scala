@@ -9,4 +9,8 @@ object AgentDAO {
     heystk.Agent.allRows.toList
   }
 
+  def createAgent(agent : Agent) : Agent = {
+    heystk.Agent.insert(agent)
+  }
+
 }

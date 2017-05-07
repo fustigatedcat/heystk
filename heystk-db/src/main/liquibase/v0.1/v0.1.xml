@@ -11,5 +11,6 @@
     <include relativeToChangelogFile="true" file="1493086017-ADD_AGENT_TABLE.xml"/>
     <include relativeToChangelogFile="true" file="1493086227-ADD_AGENTAUTHORIZATION_TABLE.xml"/>
     <include relativeToChangelogFile="true" file="1493086684-CREATE_ADMIN_USER.xml"/>
+    <include relativeToChangelogFile="true" file="1494185029-ADD_AGENTFILEREADER_TABLE.xml"/>
 
 </databaseChangeLog>

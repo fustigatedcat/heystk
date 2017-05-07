@@ -18,5 +18,9 @@ object heystk extends Schema {
 
   val UserRoleMap = table[UserRoleMap]
 
+  val AgentFileReader = table[AgentFileReader]
+
+  val agentToAgentFileReaderMapper = oneToManyRelation(Agent, AgentFileReader).via((a,afr) => a.id === afr.agentId)
+
 }
 

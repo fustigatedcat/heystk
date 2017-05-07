@@ -11,7 +11,7 @@
                 <constraints primaryKey="true" />
             </column>
             <column name="expiry" type="DATETIME" />
-            <column name="agent_id" type="INT UNSIGNED" />
+            <column name="agent_id" type="CHAR(36)" />
         </createTable>
         <addForeignKeyConstraint baseTableName="AgentAuthorization"
                                  baseColumnNames="agent_id"

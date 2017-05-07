@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1494185029-ADD_AGENTFILEREADER_TABLE" context="heystk">
+        <createTable tableName="AgentFileReader" schemaName="heystk" remarks="Table to hold filereader specific agent information">
+            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="agent_id" type="CHAR(36)" />
+            <column name="delay" type="INT UNSIGNED" />
+            <column name="file_path" type="VARCHAR(256)" />
+        </createTable>
+        <addForeignKeyConstraint baseTableName="AgentFileReader"
+                                 baseColumnNames="agent_id"
+                                 constraintName="AgentFileReader_Agent_fk"
+                                 referencedTableName="Agent"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
+    </changeSet>
+
+</databaseChangeLog>

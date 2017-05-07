@@ -6,12 +6,13 @@
 
     <changeSet author="jbackfield@gmail.com" id="1493086017-ADD_AGENT_TABLE" context="heystk">
         <createTable tableName="Agent" schemaName="heystk" remarks="Table to hold agent information">
-            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+            <column name="id" type="CHAR(36)">
                 <constraints primaryKey="true" />
             </column>
             <column name="name" type="VARCHAR(32)">
                 <constraints unique="true" />
             </column>
+            <column name="agent_type" type="ENUM('FILE_READER')" />
             <column name="created" type="DATETIME" />
             <column name="last_updated" type="DATETIME" />
             <column name="authentication" type="VARCHAR(512)">

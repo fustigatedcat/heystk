@@ -28,8 +28,16 @@
             <column name="name" value="DELETE_USER" />
         </insert>
 
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_AGENT" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_AGENT" />
+        </insert>
+
         <sql>
-            INSERT INTO RolePrivilegeMap (role_id, privilege_id) SELECT (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'), id FROM Privilege WHERE name IN ('VIEW_USERS', 'CREATE_USER', 'DELETE_USER');
+            INSERT INTO RolePrivilegeMap (role_id, privilege_id) SELECT (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'), id FROM Privilege;
         </sql>
         <sql>
             INSERT INTO UserRoleMap (user_id, role_id) VALUES ((SELECT id FROM User WHERE username = 'admin'), (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'))
