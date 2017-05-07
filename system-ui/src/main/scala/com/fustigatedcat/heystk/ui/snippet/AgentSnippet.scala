@@ -1,5 +1,7 @@
 package com.fustigatedcat.heystk.ui.snippet
 
+import java.util.UUID
+
 import com.fustigatedcat.heystk.ui.dao.AgentDAO
 import com.fustigatedcat.heystk.ui.lib.Authorization
 import com.fustigatedcat.heystk.ui.model.Agent
@@ -14,6 +16,8 @@ import scala.xml.NodeSeq
 
 object AgentSnippet {
 
+  implicit val formats = net.liftweb.json.DefaultFormats
+
   def createAgent() : CssSel = "*" #> Authorization.userAuthorized("CREATE_AGENT",
       S.attr("callback").map(callback => {
       def _createAgent(js : String) : JsCmd = parseOpt(js).map(js => {
@@ -25,6 +29,23 @@ object AgentSnippet {
           "createAgent",
           List("agent"),
           SHtml.ajaxCall(Stringify(JsVar("agent")), _createAgent).cmd
+        )
+      )
+    }).getOrElse(NodeSeq.Empty),
+    NodeSeq.Empty
+  )
+
+  def deleteAgents() : CssSel = "*" #> Authorization.userAuthorized("DELETE_AGENT",
+    S.attr("callback").map(callback => {
+      def _deleteAgents(js : String) : JsCmd = parseOpt(js).map(js => {
+        AgentDAO.deleteAgents(js.extract[List[String]].map(UUID.fromString))
+        JE.Call(callback).cmd
+      }).getOrElse(JsCmds.Alert("Invalid List"))
+      JsCmds.Script(
+        JsCmds.Function(
+          "deleteAgents",
+          List("ids"),
+          SHtml.ajaxCall(Stringify(JsVar("ids")), _deleteAgents).cmd
         )
       )
     }).getOrElse(NodeSeq.Empty),

@@ -12,6 +12,7 @@ angular.
                 $scope.agents = [];
                 loadAgents = function(agents) { $scope.$apply(function() { $scope.agents = agents; }) };
                 $scope.canCreateAgent = function() { return createAgent != null; };
+                $scope.canDeleteAgent = function() { return deleteAgents != null; };
                 $scope.createAgent = function() {
                     var modal = $uibModal.open({
                         animation: true,
@@ -49,6 +50,19 @@ angular.
                             $scope.cancel = function() { modal.close(); };
                         }
                     })
+                };
+                $scope.deleteAgents = function() {
+                    deleteAgents($scope.agents.filter(function(u) { return u.selected; }).map(function(u) { return u.id; }));
+                };
+                $scope.agentSelected = function() {
+                    for(var i in $scope.agents) {
+                        if($scope.agents.hasOwnProperty(i)) {
+                            if($scope.agents[i].selected) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 };
                 getAgentList();
             }

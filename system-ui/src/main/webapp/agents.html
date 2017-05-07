@@ -4,10 +4,12 @@
         <script src="/static/js/agents.js"></script>
         <script class="lift:AgentSnippet.getAgentList?callback=loadAgents"></script>
         <script class="lift:AgentSnippet.createAgent?callback=agentCreated"></script>
+        <script class="lift:AgentSnippet.deleteAgents?callback=getAgentList"></script>
     </head_merge>
     <section class="container">
         <section class="container" ng-controller="AgentsController">
             <input type="button" class="btn btn-primary" value="New Agent" ng-show="canCreateAgent()" ng-click="createAgent()" />
+            <input type="button" class="btn btn-danger" value="Delete" ng-show="canDeleteAgent()" ng-click="deleteAgents()" ng-disabled="!agentSelected()"/>
             <table class="table table-bordered">
                 <tr>
                     <th></th>
