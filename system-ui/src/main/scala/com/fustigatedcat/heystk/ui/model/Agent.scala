@@ -50,7 +50,7 @@ case class Agent(id : UUID,
   }
 
   def getAgentConfig : JObject = agentType match {
-    case "FILE_READER" => fileReader.single.toJs
+    case "FILE_READER" => "file-reader" -> fileReader.single.toJs
   }
 
   def toJs : JValue = {
