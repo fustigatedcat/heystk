@@ -19,4 +19,9 @@ object AgentDAO {
     heystk.Agent.deleteWhere(a => a.id in ids)
   }
 
+  def getAgentById(id : String) : Option[Agent] = {
+    val uuid = UUID.fromString(id)
+    heystk.Agent.where(a => a.id === uuid).headOption
+  }
+
 }

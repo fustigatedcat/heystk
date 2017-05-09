@@ -13,6 +13,9 @@
                 <constraints unique="true" />
             </column>
             <column name="agent_type" type="ENUM('FILE_READER')" />
+            <column name="engine_url" type="VARCHAR(128)" />
+            <column name="max_cache" type="INT UNSIGNED" />
+            <column name="max_delay" type="INT UNSIGNED" />
             <column name="created" type="DATETIME" />
             <column name="last_updated" type="DATETIME" />
             <column name="authentication" type="VARCHAR(512)">

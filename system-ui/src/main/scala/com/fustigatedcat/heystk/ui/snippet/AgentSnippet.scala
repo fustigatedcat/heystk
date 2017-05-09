@@ -6,11 +6,13 @@ import com.fustigatedcat.heystk.ui.dao.AgentDAO
 import com.fustigatedcat.heystk.ui.lib.Authorization
 import com.fustigatedcat.heystk.ui.model.Agent
 import net.liftweb.http.{SHtml, S}
-import net.liftweb.http.js.JE.{JsVar, Stringify, JsArray, JsObj}
+import net.liftweb.http.js.JE._
 import net.liftweb.http.js.{JsCmds, JE, JsCmd}
+import net.liftweb.json.JsonAST.JString
 import net.liftweb.util._, Helpers._
 
 import net.liftweb.json.parseOpt
+import net.liftweb.json.prettyRender
 
 import scala.xml.NodeSeq
 
@@ -74,6 +76,24 @@ object AgentSnippet {
         "getAgentList",
         List(),
         SHtml.ajaxInvoke(_getAgentList).cmd
+      )
+    )
+  }).getOrElse(NodeSeq.Empty)
+
+  def generateConfig() : CssSel = "*" #> S.attr("callback").map(callback => {
+    def _generateConfig(js : String) : JsCmd = parseOpt(js).map(id => {
+      AgentDAO.getAgentById(id.extract[String]).map(agent => {
+        JE.Call(
+          callback,
+          Str(prettyRender(agent.toJs))
+        ).cmd
+      }).getOrElse(JsCmds.Alert("Invalid Agent"))
+    }).getOrElse(JsCmds.Alert("Invalid input"))
+    JsCmds.Script(
+      JsCmds.Function(
+        "generateConfig",
+        List("id"),
+        SHtml.ajaxCall(Stringify(JsVar("id")), _generateConfig).cmd
       )
     )
   }).getOrElse(NodeSeq.Empty)

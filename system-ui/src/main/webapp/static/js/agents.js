@@ -1,5 +1,8 @@
 var loadAgents = function() {};
 var agentCreated = function() {};
+var showAgentConfig = function(input) {
+    alert(input);
+};
 
 angular.
     module('heystk').
@@ -11,6 +14,16 @@ angular.
             function($scope, $uibModal) {
                 $scope.agents = [];
                 loadAgents = function(agents) { $scope.$apply(function() { $scope.agents = agents; }) };
+                showAgentConfig = function(config) {
+                    $uibModal.open({
+                        animation: true,
+                        templateUrl : getContext() + '/static/html/display-agent-config.html',
+                        controller : function($scope) {
+                            $scope.config = config;
+                        }
+                    });
+                    $scope.$apply();
+                };
                 $scope.canCreateAgent = function() { return createAgent != null; };
                 $scope.canDeleteAgent = function() { return deleteAgents != null; };
                 $scope.createAgent = function() {
@@ -64,6 +77,7 @@ angular.
                     }
                     return false;
                 };
+                $scope.generateConfig = function(id) { generateConfig(id); };
                 getAgentList();
             }
         ]

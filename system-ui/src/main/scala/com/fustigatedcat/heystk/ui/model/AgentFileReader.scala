@@ -2,9 +2,11 @@ package com.fustigatedcat.heystk.ui.model
 
 import java.util.UUID
 
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonAST.{JObject, JValue}
 import org.squeryl.KeyedEntity
 import org.squeryl.annotations.Column
+
+import net.liftweb.json.JsonDSL._
 
 object AgentFileReader {
 
@@ -25,5 +27,10 @@ case class AgentFileReader(id : Long,
                            @Column("agent_id") agentId : UUID,
                            delay : Long,
                            @Column("file_path") filePath : String) extends KeyedEntity[Long] {
+
+  def toJs : JObject = {
+    ("delay" -> this.delay) ~
+      ("file-path" -> this.filePath)
+  }
 
 }
