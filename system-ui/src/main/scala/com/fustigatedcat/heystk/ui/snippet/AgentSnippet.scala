@@ -20,7 +20,7 @@ object AgentSnippet {
   implicit val formats = net.liftweb.json.DefaultFormats
 
   def createAgent() : CssSel = "*" #> Authorization.userAuthorized("CREATE_AGENT",
-      S.attr("callback").map(callback => {
+    S.attr("callback").map(callback => {
       def _createAgent(js : String) : JsCmd = parseOpt(js).map(js => {
         AgentDAO.createAgent(Agent.parse(js)).parseAndAssociateAgentType(js)
         JE.Call(callback).cmd

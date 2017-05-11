@@ -9,6 +9,10 @@ object EngineAPIDAO {
     heystk.EngineAPI.allRows.toList
   }
 
+  def createEngineAPI(engineAPI : EngineAPI) : EngineAPI = {
+    heystk.EngineAPI.insert(engineAPI)
+  }
+
   def deleteEngineAPIs(ids : List[Long]) = {
     heystk.EngineAPI.deleteWhere(api => api.id in ids)
   }

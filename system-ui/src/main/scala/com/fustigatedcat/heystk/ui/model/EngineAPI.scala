@@ -1,9 +1,38 @@
 package com.fustigatedcat.heystk.ui.model
 
 import java.sql.Timestamp
+import java.util.Calendar
 
+import net.liftweb.json.JsonAST.JValue
 import org.squeryl.KeyedEntity
 import org.squeryl.annotations.Column
+
+object EngineAPI {
+
+  implicit val formats = net.liftweb.json.DefaultFormats
+
+  def parse(js : JValue) : EngineAPI = {
+    EngineAPI(
+      0,
+      (js \ "host").extract[String],
+      (js \ "port").extract[Int],
+      (js \ "context").extract[String],
+      (js \ "authorization" \ "expiry").extract[Int],
+      (js \ "database" \ "host").extract[String],
+      (js \ "database" \ "port").extract[Int],
+      (js \ "database" \ "db").extract[String],
+      (js \ "queue" \ "amqp" \ "host").extract[String],
+      (js \ "queue" \ "amqp" \ "port").extract[Int],
+      (js \ "queue" \ "amqp" \ "vhost").extract[String],
+      (js \ "queue" \ "amqp" \ "api" \ "exchangeName").extract[String],
+      (js \ "queue" \ "amqp" \ "api" \ "queueName").extract[String],
+      (js \ "queue" \ "amqp" \ "api" \ "routingKey").extract[String],
+      new Timestamp(Calendar.getInstance.getTimeInMillis),
+      new Timestamp(Calendar.getInstance.getTimeInMillis)
+    )
+  }
+
+}
 
 case class EngineAPI(id : Long,
                      @Column("listen_host") listenHost : String,

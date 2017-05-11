@@ -2,6 +2,7 @@ package com.fustigatedcat.heystk.ui.snippet
 
 import com.fustigatedcat.heystk.ui.dao.EngineAPIDAO
 import com.fustigatedcat.heystk.ui.lib.Authorization
+import com.fustigatedcat.heystk.ui.model.EngineAPI
 import net.liftweb.http.js.JE.{JsVar, Stringify, JsObj, JsArray}
 import net.liftweb.http.{SHtml, S}
 import net.liftweb.http.js.{JE, JsCmds, JsCmd}
@@ -14,6 +15,23 @@ import scala.xml.NodeSeq
 object EngineAPISnippet {
 
   implicit val formats = net.liftweb.json.DefaultFormats
+
+  def createEngineAPI() : CssSel = "*" #> Authorization.userAuthorized("CREATE_ENGINE_API",
+    S.attr("callback").map(callback => {
+      def _createEngineAPI(js : String) : JsCmd = parseOpt(js).map(js => {
+        EngineAPIDAO.createEngineAPI(EngineAPI.parse(js))
+        JE.Call(callback).cmd
+      }).getOrElse(JsCmds.Alert("Invalid Input"))
+      JsCmds.Script(
+        JsCmds.Function(
+          "createEngineAPI",
+          List("api"),
+          SHtml.ajaxCall(Stringify(JsVar("api")), _createEngineAPI).cmd
+        )
+      )
+    }).getOrElse(NodeSeq.Empty),
+    NodeSeq.Empty
+  )
 
   def deleteEngineAPIs() : CssSel = "*" #> Authorization.userAuthorized("DELETE_ENGINE_API",
     S.attr("callback").map(callback => {
