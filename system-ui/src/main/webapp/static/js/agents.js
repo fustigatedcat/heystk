@@ -1,8 +1,6 @@
 var loadAgents = function() {};
 var agentCreated = function() {};
-var showAgentConfig = function(input) {
-    alert(input);
-};
+var showAgentConfig = function() {};
 
 angular.
     module('heystk').

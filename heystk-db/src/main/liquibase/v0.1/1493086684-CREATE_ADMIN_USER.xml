@@ -36,6 +36,14 @@
             <column name="name" value="DELETE_AGENT" />
         </insert>
 
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_ENGINE_API" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_ENGINE_API" />
+        </insert>
+
         <sql>
             INSERT INTO RolePrivilegeMap (role_id, privilege_id) SELECT (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'), id FROM Privilege;
         </sql>

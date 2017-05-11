@@ -8,7 +8,6 @@ import com.fustigatedcat.heystk.ui.model.Agent
 import net.liftweb.http.{SHtml, S}
 import net.liftweb.http.js.JE._
 import net.liftweb.http.js.{JsCmds, JE, JsCmd}
-import net.liftweb.json.JsonAST.JString
 import net.liftweb.util._, Helpers._
 
 import net.liftweb.json.parseOpt

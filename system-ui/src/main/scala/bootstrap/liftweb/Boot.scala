@@ -67,6 +67,7 @@ class Boot {
       Menu("Logout") / "logout" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("User List") / "users" >> If(() => Authorization.userHasPrivilege("VIEW_USERS"), () => RedirectResponse("/")),
       Menu("Agent List") / "agents" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
+      Menu("Engine API list") / "engine-apis" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Static") / "static" / **
     ))
     this
