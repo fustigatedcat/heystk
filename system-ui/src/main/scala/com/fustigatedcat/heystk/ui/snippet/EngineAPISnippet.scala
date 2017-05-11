@@ -3,12 +3,12 @@ package com.fustigatedcat.heystk.ui.snippet
 import com.fustigatedcat.heystk.ui.dao.EngineAPIDAO
 import com.fustigatedcat.heystk.ui.lib.Authorization
 import com.fustigatedcat.heystk.ui.model.EngineAPI
-import net.liftweb.http.js.JE.{JsVar, Stringify, JsObj, JsArray}
+import net.liftweb.http.js.JE._
 import net.liftweb.http.{SHtml, S}
 import net.liftweb.http.js.{JE, JsCmds, JsCmd}
 import net.liftweb.util._, Helpers._
 
-import net.liftweb.json.parseOpt
+import net.liftweb.json._
 
 import scala.xml.NodeSeq
 
@@ -72,6 +72,24 @@ object EngineAPISnippet {
         "getEngineAPIList",
         List(),
         SHtml.ajaxInvoke(_getEngineAPIList).cmd
+      )
+    )
+  }).getOrElse(NodeSeq.Empty)
+
+  def generateConfig() : CssSel = "*" #> S.attr("callback").map(callback => {
+    def _generateConfig(js : String) : JsCmd = parseOpt(js).map(id => {
+      EngineAPIDAO.getEngineAPIById(id.extract[Long]).map(api => {
+        JE.Call(
+          callback,
+          Str(prettyRender(api.toJs))
+        ).cmd
+      }).getOrElse(JsCmds.Alert("Invalid EngineAPI"))
+    }).getOrElse(JsCmds.Alert("Invalid input"))
+    JsCmds.Script(
+      JsCmds.Function(
+        "generateConfig",
+        List("id"),
+        SHtml.ajaxCall(Stringify(JsVar("id")), _generateConfig).cmd
       )
     )
   }).getOrElse(NodeSeq.Empty)

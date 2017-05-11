@@ -1,5 +1,6 @@
 var loadEngineAPIs = function() {};
 var engineAPICreated = function() {};
+var showAgentConfig = function() {};
 
 angular.
     module('heystk').
@@ -28,6 +29,17 @@ angular.
                 $scope.canDeleteEngineAPI = function() { return deleteEngineAPIs != null; };
                 $scope.deleteEngineAPIs = function() {
                     deleteEngineAPIs($scope.engineAPIs.filter(function(u) { return u.selected; }).map(function(u) { return u.id; }));
+                };
+                $scope.generateConfig = function(id) { generateConfig(id) ; };
+                showAgentConfig = function(config) {
+                    $uibModal.open({
+                        animation: true,
+                        templateUrl : getContext() + '/static/html/display-engine-api-config.html',
+                        controller : function($scope) {
+                            $scope.config = config;
+                        }
+                    });
+                    $scope.$apply();
                 };
                 $scope.createEngineAPI = function() {
                     var modal = $uibModal.open({

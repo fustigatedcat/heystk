@@ -17,4 +17,8 @@ object EngineAPIDAO {
     heystk.EngineAPI.deleteWhere(api => api.id in ids)
   }
 
+  def getEngineAPIById(id : Long) = {
+    heystk.EngineAPI.where(api => api.id === id).headOption
+  }
+
 }

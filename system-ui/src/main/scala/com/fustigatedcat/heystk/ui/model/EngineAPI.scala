@@ -7,6 +7,8 @@ import net.liftweb.json.JsonAST.JValue
 import org.squeryl.KeyedEntity
 import org.squeryl.annotations.Column
 
+import net.liftweb.json.JsonDSL._
+
 object EngineAPI {
 
   implicit val formats = net.liftweb.json.DefaultFormats
@@ -50,5 +52,44 @@ case class EngineAPI(id : Long,
                      @Column("queue_amqp_api_routing_key") queueAmqpApiRoutingKey : String,
                      created : Timestamp,
                      @Column("last_updated") lastUpdated : Timestamp) extends KeyedEntity[Long] {
+
+  def toJs : JValue = {
+    ("engine" ->
+      ("api" -> (
+        ("host" -> this.listenHost) ~
+          ("port" -> this.listenPort) ~
+          ("context" -> this.context) ~
+          ("authorization" -> ("expiry" -> this.authorizationExpiry)) ~
+          ("database" -> (
+            ("host" -> this.databaseHost) ~
+              ("port" -> this.databasePort) ~
+              ("db" -> this.databaseDb) ~
+              ("username" -> "USERNAME") ~
+              ("password" -> "PASSWORD") ~
+              ("pool" -> (
+                ("min" -> 5) ~
+                  ("max" -> 20)
+                )) ~
+              ("jdbc-properties" -> (
+                "serverTimezone" -> "UTC"
+                ))
+            ))
+        )) ~
+        ("queue" -> (
+          "amqp" -> (
+            ("host" -> this.queueAmqpHost) ~
+              ("port" -> this.queueAmqpPort) ~
+              ("vhost" -> this.queueAmqpVhost) ~
+              ("username" -> "USERNAME") ~
+              ("password" -> "PASSWORD") ~
+              ("api" -> (
+                ("exchange-name" -> this.queueAmqpApiExchangeName) ~
+                  ("queue-name" -> this.queueAmqpApiQueueName) ~
+                  ("routing-key" -> this.queueAmqpApiRoutingKey)
+                ))
+            )
+          ))
+      )
+  }
 
 }
