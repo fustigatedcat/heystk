@@ -19,7 +19,7 @@ object EngineAPISnippet {
   def createEngineAPI() : CssSel = "*" #> Authorization.userAuthorized("CREATE_ENGINE_API",
     S.attr("callback").map(callback => {
       def _createEngineAPI(js : String) : JsCmd = parseOpt(js).map(js => {
-        EngineAPIDAO.createEngineAPI(EngineAPI.parse(js))
+        EngineAPIDAO.insert(EngineAPI.parse(js))
         JE.Call(callback).cmd
       }).getOrElse(JsCmds.Alert("Invalid Input"))
       JsCmds.Script(
@@ -55,7 +55,7 @@ object EngineAPISnippet {
       JE.Call(
         callback,
         JsArray(
-          EngineAPIDAO.getEngineAPIList.map(api => {
+          EngineAPIDAO.list.map(api => {
             JsObj(
               "id" -> api.id,
               "host" -> api.listenHost,

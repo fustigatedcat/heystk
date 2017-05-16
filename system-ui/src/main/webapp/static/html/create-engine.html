@@ -1,0 +1,36 @@
+<section class="container">
+    <h1>Create Engine</h1>
+    <section class="row">
+        <section class="col-lg-3"><label for="name">Name</label></section>
+        <section class="col-lg-3"><input id="name" type="text" ng-model="name" /></section>
+    </section>
+    <hr />
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-host">AMQP Host</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-host" type="text" ng-model="queue.amqp.host" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-port">AMQP Port</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-port" type="number" min="1" max="65535" ng-model="queue.amqp.port" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-vhost">AMQP VHost</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-vhost" type="text" ng-model="queue.amqp.vhost" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-api-exchange-name">AMQP Exchange Name</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-api-exchange-name" type="text" ng-model="queue.amqp.api.exchangeName" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-api-queue-name">AMQP Queue Name</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-api-queue-name" type="text" ng-model="queue.amqp.api.queueName" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><label for="queue-amqp-routing-key">AMQP Routing Key</label></section>
+        <section class="col-lg-3"><input id="queue-amqp-routing-key" type="text" ng-model="queue.amqp.api.routingKey" /></section>
+    </section>
+    <section class="row">
+        <section class="col-lg-3"><input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()"/></section>
+        <section class="col-lg-3"><input type="button" class="btn btn-primary" value="Create" ng-click="create()"/></section>
+    </section>
+</section>

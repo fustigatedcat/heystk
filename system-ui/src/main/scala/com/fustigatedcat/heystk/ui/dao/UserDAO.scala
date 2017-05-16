@@ -10,7 +10,9 @@ import org.apache.commons.codec.digest.DigestUtils
 
 import scala.util.Random
 
-object UserDAO {
+object UserDAO extends AbstractDAO[Long, User] {
+
+  override val table = heystk.User
 
   def createSalt() : String = Random.alphanumeric.take(64).mkString
 
@@ -37,17 +39,13 @@ object UserDAO {
     ).distinct.toList
   }
 
-  def getUserList : List[User] = {
-    heystk.User.allRows.toList.sortBy(_.id)
-  }
-
   def getUserByUsername(username : String) : Option[User] = {
-    heystk.User.where(u => u.username === username).headOption
+    table.where(u => u.username === username).headOption
   }
 
   def createUser(username : String, firstName : String, lastName : String, password : String) : User = {
     val salt = createSalt()
-    heystk.User.insert(
+    this.insert(
       User(
         0,
         username,
@@ -61,7 +59,7 @@ object UserDAO {
   }
 
   def deleteUsers(ids : List[Long]) : Unit = {
-    heystk.User.deleteWhere(u => u.id in ids)
+    table.deleteWhere(u => u.id in ids)
   }
 
 }

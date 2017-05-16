@@ -22,7 +22,7 @@ object AgentSnippet {
   def createAgent() : CssSel = "*" #> Authorization.userAuthorized("CREATE_AGENT",
     S.attr("callback").map(callback => {
       def _createAgent(js : String) : JsCmd = parseOpt(js).map(js => {
-        AgentDAO.createAgent(Agent.parse(js)).parseAndAssociateAgentType(js)
+        AgentDAO.insert(Agent.parse(js)).parseAndAssociateAgentType(js)
         JE.Call(callback).cmd
       }).getOrElse(JsCmds.Alert("Invalid input"))
       JsCmds.Script(
@@ -58,7 +58,7 @@ object AgentSnippet {
       JE.Call(
         callback,
         JsArray(
-          AgentDAO.getAgentList.map(agent => {
+          AgentDAO.list.map(agent => {
             JsObj(
               "id" -> agent.id.toString,
               "name" -> agent.name,

@@ -47,7 +47,7 @@ object UserSnippet {
       def _getUserList() : JsCmd = {
         JE.Call(
           callback,
-          JsArray(UserDAO.getUserList.map(u =>
+          JsArray(UserDAO.list.map(u =>
             JsObj("id" -> u.id,
               "username" -> u.username,
               "firstName" -> u.firstName,

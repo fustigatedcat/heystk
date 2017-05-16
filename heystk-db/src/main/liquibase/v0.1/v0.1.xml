@@ -13,5 +13,6 @@
     <include relativeToChangelogFile="true" file="1493086684-CREATE_ADMIN_USER.xml"/>
     <include relativeToChangelogFile="true" file="1494185029-ADD_AGENTFILEREADER_TABLE.xml"/>
     <include relativeToChangelogFile="true" file="1494464574-ADD_ENGINEAPI_TABLE.xml"/>
+    <include relativeToChangelogFile="true" file="1494904529-ADD_ENGINE_TABLE.xml"/>
 
 </databaseChangeLog>
