@@ -1,6 +1,9 @@
 # heystk
 Community Driven SIEM
 
+# Why another SIEM Solution?
+Whether directly or indirectly, security impacts us all. By making this a community driven project, we can help eachother by sharing our knowledge of normalizing our logs as well as creating rules based on security issues.
+
 # Components
 
 * Agent
@@ -21,18 +24,17 @@ There is no processing done with this layer, but is necessary to decouple the un
 
 *TODO*: The Engine-API should also provide an ability to download the agents configuration thus making it a simpler configuration mechansim.
 
-## Engine *TODO*
-This application reads from the Queue, pushes into a short term database and processes the records in it. The application should have a set of rules for handling correlation and plugins. Any number of engines should be runnable to support a wider scale if more normalizations are being processed. Each rule which fires will have a corresponding action, actions are actually plug-ins which can be developed and deployed for an unlimited amount of functionality. Some built-in actions:
+## Engine
+This application reads from the Queue, pushes into a short term database and processes the records in it. The application should have a set of rules for handling correlation and plugins. Any number of engines should be runnable to support a wider scale if more normalizations are being processed. Each rule which fires will have a corresponding action, actions are actually plug-ins which can be developed and deployed for an unlimited amount of functionality.
 
-* Drop
-* Store Long Term Storage
-* Correlate
+The engine should have the ability to correlate normalizations together based on the short term database. When a rule fires (which is not a correlation rule) the specified actions will fire.
 
 A rule can fire multiple actions however, a Normalization can only match one rule though.
 
-## Action Plug-Ins *TODO*
+## Action Plug-Ins
 These plug-ins will be responsible for handling actions when a specific rule fires. Some concepts are as follows but can be developed by request.
 
+* Store Long Term Storage
 * Call into remote API
 * Send E-Mail
 * Create 'ticket'
