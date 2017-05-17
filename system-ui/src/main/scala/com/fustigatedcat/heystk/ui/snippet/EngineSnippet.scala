@@ -4,7 +4,7 @@ import com.fustigatedcat.heystk.ui.dao.EngineDAO
 import com.fustigatedcat.heystk.ui.lib.Authorization
 import com.fustigatedcat.heystk.ui.model.Engine
 import net.liftweb.http.{SHtml, S}
-import net.liftweb.http.js.JE.{JsVar, Stringify, JsObj, JsArray}
+import net.liftweb.http.js.JE._
 import net.liftweb.http.js.{JsCmds, JE, JsCmd}
 import net.liftweb.json._
 import net.liftweb.util._, Helpers._
@@ -72,5 +72,23 @@ object EngineSnippet {
     }).getOrElse(NodeSeq.Empty),
     NodeSeq.Empty
   )
+
+  def generateConfig() : CssSel = "*" #> S.attr("callback").map(callback => {
+    def _generateConfig(js : String) : JsCmd = parseOpt(js).map(id => {
+      EngineDAO.getEngineById(id.extract[Long]).map(engine => {
+        JE.Call(
+          callback,
+          Str(prettyRender(engine.toJs))
+        ).cmd
+      }).getOrElse(JsCmds.Alert("Invalid Engine"))
+    }).getOrElse(JsCmds.Alert("Invalid input"))
+    JsCmds.Script(
+      JsCmds.Function(
+        "generateConfig",
+        List("id"),
+        SHtml.ajaxCall(Stringify(JsVar("id")), _generateConfig).cmd
+      )
+    )
+  }).getOrElse(NodeSeq.Empty)
 
 }

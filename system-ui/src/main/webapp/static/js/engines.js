@@ -1,5 +1,6 @@
 var loadEngines = function() {};
 var engineCreated = function() {};
+var showEngineConfig = function() {};
 
 angular.
     module('heystk').
@@ -30,10 +31,10 @@ angular.
                     deleteEngines($scope.engines.filter(function(u) { return u.selected; }).map(function(u) { return u.id; }));
                 };
                 $scope.generateConfig = function(id) { generateConfig(id) ; };
-                showAgentConfig = function(config) {
+                showEngineConfig = function(config) {
                     $uibModal.open({
                         animation: true,
-                        templateUrl : getContext() + '/static/html/display-engine-api-config.html',
+                        templateUrl : getContext() + '/static/html/display-engine-config.html',
                         controller : function($scope) {
                             $scope.config = config;
                         }

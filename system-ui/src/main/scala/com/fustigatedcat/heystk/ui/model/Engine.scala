@@ -3,9 +3,11 @@ package com.fustigatedcat.heystk.ui.model
 import java.sql.Timestamp
 import java.util.Calendar
 
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonAST.{JArray, JValue}
 import org.squeryl.KeyedEntity
 import org.squeryl.annotations.Column
+
+import net.liftweb.json.JsonDSL._
 
 object Engine {
 
@@ -38,5 +40,26 @@ case class Engine(id : Long,
                   @Column("queue_amqp_api_routing_key") queueAmqpApiRoutingKey : String,
                   created : Timestamp,
                   @Column("last_updated") lastUpdated : Timestamp) extends KeyedEntity[Long] {
+
+  def toJs : JValue = {
+    "engine" -> (
+      ("processor" -> (
+        ("rules" -> JArray(List())) ~
+          ("actions" -> JArray(List()))
+        )) ~
+        ("queue" -> (
+          ("amqp" -> (
+            ("host" -> this.queueAmqpHost) ~
+              ("port" -> this.queueAmqpPort) ~
+              ("vhost" -> this.queueAmqpVhost) ~
+              ("api" -> (
+                ("exchange-name" -> this.queueAmqpApiExchangeName) ~
+                  ("exchange-queue" -> this.queueAmqpApiQueueName) ~
+                  ("routing-key" -> this.queueAmqpApiRoutingKey)
+                ))
+            ))
+          ))
+      )
+  }
 
 }

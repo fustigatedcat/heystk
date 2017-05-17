@@ -12,4 +12,8 @@ object EngineDAO extends AbstractDAO[Long, Engine] {
     heystk.Engine.deleteWhere(api => api.id in ids)
   }
 
+  def getEngineById(id : Long) : Option[Engine] = {
+    heystk.Engine.where(engine => engine.id === id).headOption
+  }
+
 }
