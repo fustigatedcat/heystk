@@ -1,0 +1,27 @@
+<lift:surround with="body" at="body">
+    <head_merge>
+        <title>heystk - Profile</title>
+        <script src="/static/js/profiles.js"></script>
+        <script class="lift:ProfileSnippet.getLoggedInUser?callback=populateUser"></script>
+    </head_merge>
+    <section class="container" ng-controller="ProfileController">
+        <span class="row">
+            <span class="col-lg-3"><label for="username">Username</label></span>
+            <span class="col-lg-3">
+                <input id="username" ng-model="username" />
+            </span>
+        </span>
+        <span class="row">
+            <span class="col-lg-3"><label for="firstName">First Name</label></span>
+            <span class="col-lg-3">
+                <input id="firstName" ng-model="firstName" />
+            </span>
+        </span>
+        <span class="row">
+            <span class="col-lg-3"><label for="lastName">Last Name</label></span>
+            <span class="col-lg-3">
+                <input id="lastName" ng-model="lastName" />
+            </span>
+        </span>
+    </section>
+</lift:surround>

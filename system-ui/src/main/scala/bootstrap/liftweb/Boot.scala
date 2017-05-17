@@ -69,6 +69,7 @@ class Boot {
       Menu("Agent List") / "agents" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Engine API List") / "engine-apis" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Engine List") / "engines" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
+      Menu("My Profile") / "profiles" >> If(() => LoggedInUser.is.isDefined, () => RedirectResponse("/login")),
       Menu("Static") / "static" / **
     ))
     this
