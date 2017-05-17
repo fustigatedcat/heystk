@@ -39,6 +39,7 @@ class Processor(rules : List[Rule], actions : Map[String, Action]) {
         case Some(action) => action.execute(normalization)
         case _ => logger.error("Failed to find action {}", act)
       })
+      case _ => logger.info("No rule matched")
     }
   }
 

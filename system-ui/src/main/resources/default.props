@@ -1,0 +1,5 @@
+database.jdbc.url=jdbc:mysql://localhost:3306/heystk?serverTimezone=UTC
+database.username=root
+database.password=
+database.pool.min=5
+database.pool.max=20

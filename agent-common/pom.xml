@@ -21,7 +21,8 @@
   <dependencies>
     <dependency>
       <groupId>org.scala-lang</groupId>
-      <artifactId>scala-dist</artifactId>
+      <artifactId>scala-library-all</artifactId>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.scalatest</groupId>

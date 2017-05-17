@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1494904529-ADD_ENGINE_TABLE" context="heystk">
+        <createTable tableName="Engine" schemaName="heystk" remarks="Table to hold Engine information">
+            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="VARCHAR(128)" />
+            <column name="queue_amqp_host" type="VARCHAR(128)" />
+            <column name="queue_amqp_port" type="INT UNSIGNED" />
+            <column name="queue_amqp_vhost" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_exchange_name" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_queue_name" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_routing_key" type="VARCHAR(32)" />
+            <column name="created" type="DATETIME" />
+            <column name="last_updated" type="DATETIME" />
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

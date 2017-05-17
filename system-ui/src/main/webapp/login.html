@@ -1,0 +1,32 @@
+<lift:surround with="body" at="body">
+    <head_merge>
+        <title>heystk - Login</title>
+    </head_merge>
+    <section>
+        <section class="col-lg-offset-3 col-lg-6 panel panel-default">
+            <section class="panel-body">
+                <form action="/login" method="post">
+                    <section class="row">
+                        <h1 class="text-center">Login to Heystk</h1>
+                        <section class="lift:Login.login text-danger text-center">
+                            Invalid username/password
+                        </section>
+                    </section>
+                    <section class="row">
+                        <section class="col-lg-6 text-right"><label for="username">Username</label></section>
+                        <section class="col-lg-6 text-left"><input id="username" name="username" type="text" placeholder="jappleseed" /></section>
+                    </section>
+                    <section class="row">
+                        <section class="col-lg-6 text-right"><label for="password">Password</label></section>
+                        <section class="col-lg-6 text-left"><input id="password" name="password" type="password" /></section>
+                    </section>
+                    <section class="row">
+                        <section class="col-lg-offset-3 col-lg-6 text-center">
+                            <button type="submit" class="btn btn-primary" value="Login">Login</button>
+                        </section>
+                    </section>
+                </form>
+            </section>
+        </section>
+    </section>
+</lift:surround>

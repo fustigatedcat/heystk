@@ -1,0 +1,32 @@
+<lift:surround with="body" at="body">
+    <head_merge>
+        <title>heystk - Engine API</title>
+        <script src="/static/js/engines.js"></script>
+        <script class="lift:EngineSnippet.getEngineList?callback=loadEngines"></script>
+        <script class="lift:EngineSnippet.createEngine?callback=engineCreated"></script>
+        <script class="lift:EngineSnippet.deleteEngines?callback=getEngineList"></script>
+        <script class="lift:EngineSnippet.generateConfig?callback=showEngineConfig"></script>
+    </head_merge>
+    <section class="container">
+        <section class="container" ng-controller="EnginesController">
+            <input type="button" class="btn btn-primary" value="New Engine" ng-show="canCreateEngine()" ng-click="createEngine()" />
+            <input type="button" class="btn btn-danger" value="Delete" ng-show="canDeleteEngine()" ng-click="deleteEngines()" ng-disabled="!engineSelected()"/>
+            <table class="table table-bordered">
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Config</th>
+                </tr>
+                <tr ng-repeat="engine in engines">
+                    <td><input type="checkbox" ng-model="engine.selected" /></td>
+                    <td>{{engine.id}}</td>
+                    <td>{{engine.name}}</td>
+                    <td>{{engine.created | date :'MM/dd/yyyy h:mma'}}</td>
+                    <td><input type="button" class="btn btn-primary" value="Generate" ng-click="generateConfig(engine.id)" /></td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</lift:surround>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1494464574-ADD_ENGINEAPI_TABLE" context="heystk">
+        <createTable tableName="EngineAPI" schemaName="heystk" remarks="Table to hold Engine API information">
+            <column name="id" autoIncrement="true" type="INT UNSIGNED">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="listen_host" type="VARCHAR(128)" />
+            <column name="listen_port" type="INT UNSIGNED" />
+            <column name="context" type="VARCHAR(32)" />
+            <column name="authorization_expiry" type="INT UNSIGNED" />
+            <column name="database_host" type="VARCHAR(128)" />
+            <column name="database_port" type="INT UNSIGNED" />
+            <column name="database_db" type="VARCHAR(32)" />
+            <column name="queue_amqp_host" type="VARCHAR(128)" />
+            <column name="queue_amqp_port" type="INT UNSIGNED" />
+            <column name="queue_amqp_vhost" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_exchange_name" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_queue_name" type="VARCHAR(32)" />
+            <column name="queue_amqp_api_routing_key" type="VARCHAR(32)" />
+            <column name="created" type="DATETIME" />
+            <column name="last_updated" type="DATETIME" />
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

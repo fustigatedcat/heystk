@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="heystk">
+    <head>
+        <meta charset="UTF-8">
+        <script src="/static/js/lib/angularjs/angular.js"></script>
+        <script src="/static/js/lib/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
+        <script src="/static/js/lib/jquery/jquery.js"></script>
+        <script src="/static/js/main.js"></script>
+        <link rel="stylesheet" href="/static/css/lib/bootstrap/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/static/css/lib/bootstrap/bootstrap.min.css">
+        <meta name="author" content="Joshua Backfield">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" ng-controller="NavigationController">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Heystk</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <lift:testCond.loggedIn>
+                            <li class="dropdown" uib-dropdown>
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">System <span class="caret"></span></a>
+                                <ul class="dropdown-menu" uib-dropdown-menu>
+                                    <li><a href="/agents">Agents</a></li>
+                                    <li><a href="/engine-apis">Engine API</a></li>
+                                    <li><a href="/engines">Engine</a></li>
+                                </ul>
+                            </li>
+                            <li class="lift:userSnippet.ifAdminMenuAvailable dropdown" uib-dropdown>
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu" uib-dropdown-menu>
+                                    <li class="lift:UserSnippet.ifCanViewUsers"><a href="/users">Users</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" uib-dropdown>
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="lift:UserSnippet.loggedInUser"><span id="name"></span></span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu" uib-dropdown-menu>
+                                    <li><a href="/profiles">Profile</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </lift:testCond.loggedIn>
+                        <lift:testCond.loggedOut>
+                            <li><a href="/login">Login</a></li>
+                        </lift:testCond.loggedOut>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <section id="body"></section>
+    </body>
+</html>

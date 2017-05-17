@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1493086227-ADD_AGENTAUTHORIZATION_TABLE" context="heystk">
+
+        <createTable tableName="AgentAuthorization" schemaName="heystk" remarks="Table to hold agent authorization information">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="expiry" type="DATETIME" />
+            <column name="agent_id" type="CHAR(36)" />
+        </createTable>
+        <addForeignKeyConstraint baseTableName="AgentAuthorization"
+                                 baseColumnNames="agent_id"
+                                 constraintName="Agent_AgentAuthorization_fk"
+                                 referencedTableName="Agent"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

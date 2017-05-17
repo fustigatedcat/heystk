@@ -1,0 +1,36 @@
+<lift:surround with="body" at="body">
+    <head_merge>
+        <title>heystk - Engine API</title>
+        <script src="/static/js/engine-apis.js"></script>
+        <script class="lift:EngineAPISnippet.getEngineAPIList?callback=loadEngineAPIs"></script>
+        <script class="lift:EngineAPISnippet.deleteEngineAPIs?callback=getEngineAPIList"></script>
+        <script class="lift:EngineAPISnippet.createEngineAPI?callback=engineAPICreated"></script>
+        <script class="lift:EngineAPISnippet.generateConfig?callback=showAgentConfig"></script>
+    </head_merge>
+    <section class="container">
+        <section class="container" ng-controller="EngineAPIsController">
+            <input type="button" class="btn btn-primary" value="New Engine API" ng-show="canCreateEngineAPI()" ng-click="createEngineAPI()" />
+            <input type="button" class="btn btn-danger" value="Delete" ng-show="canDeleteEngineAPI()" ng-click="deleteEngineAPIs()" ng-disabled="!engineAPISelected()"/>
+            <table class="table table-bordered">
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Host</th>
+                    <th>Port</th>
+                    <th>Context</th>
+                    <th>Created</th>
+                    <th>Config</th>
+                </tr>
+                <tr ng-repeat="engineAPI in engineAPIs">
+                    <td><input type="checkbox" ng-model="engineAPI.selected" /></td>
+                    <td>{{engineAPI.id}}</td>
+                    <td>{{engineAPI.host}}</td>
+                    <td>{{engineAPI.port}}</td>
+                    <td>{{engineAPI.context}}</td>
+                    <td>{{engineAPI.created | date :'MM/dd/yyyy h:mma'}}</td>
+                    <td><input type="button" class="btn btn-primary" value="Generate" ng-click="generateConfig(engineAPI.id)" /></td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</lift:surround>

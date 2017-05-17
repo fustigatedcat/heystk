@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="jbackfield@gmail.com" id="1493086684-CREATE_ADMIN_USER" context="heystk">
+
+        <insert tableName="User" schemaName="heystk">
+            <column name="username" value="admin" />
+            <column name="salt" value="j7X5N3FhS1DeDFyt7ME9YuMKv3B6gJaQHyjYhwQhvcUXE1MxDqZXPwSaemXmxaOW" />
+            <column name="hash" value="81d883a9c58e10941ba435b1b8317dc1b51f55fa6744f7895643c0076a60a1d8" />
+            <column name="first_name" value="Administrator" />
+            <column name="last_name" value="" />
+            <column name="created" valueDate="UTC_TIMESTAMP()" />
+        </insert>
+
+        <insert tableName="Role" schemaName="heystk">
+            <column name="name" value="ADMINISTRATOR" />
+        </insert>
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="VIEW_USERS" />
+        </insert>
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_USER" />
+        </insert>
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_USER" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_AGENT" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_AGENT" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_ENGINE_API" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_ENGINE_API" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="CREATE_ENGINE" />
+        </insert>
+
+        <insert tableName="Privilege" schemaName="heystk">
+            <column name="name" value="DELETE_ENGINE" />
+        </insert>
+
+        <sql>
+            INSERT INTO RolePrivilegeMap (role_id, privilege_id) SELECT (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'), id FROM Privilege;
+        </sql>
+        <sql>
+            INSERT INTO UserRoleMap (user_id, role_id) VALUES ((SELECT id FROM User WHERE username = 'admin'), (SELECT id FROM Role WHERE name = 'ADMINISTRATOR'))
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
