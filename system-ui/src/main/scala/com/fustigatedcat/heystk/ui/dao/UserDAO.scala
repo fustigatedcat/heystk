@@ -58,6 +58,24 @@ object UserDAO extends AbstractDAO[Long, User] {
     )
   }
 
+  def updateUser(user : User, firstName : String, lastName : String, password: Option[String]) = {
+    val (s,p) = password.map(str => {
+      val salt = createSalt()
+      (salt, hash(str, salt))
+    }).getOrElse((user.salt, user.hash))
+    heystk.User.update(
+      User(
+        user.id,
+        user.username,
+        firstName,
+        lastName,
+        s,
+        p,
+        user.created
+      )
+    )
+  }
+
   def deleteUsers(ids : List[Long]) : Unit = {
     table.deleteWhere(u => u.id in ids)
   }

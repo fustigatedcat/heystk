@@ -3,25 +3,39 @@
         <title>heystk - Profile</title>
         <script src="/static/js/profiles.js"></script>
         <script class="lift:ProfileSnippet.getLoggedInUser?callback=populateUser"></script>
+        <script class="lift:ProfileSnippet.updateUser"></script>
     </head_merge>
     <section class="container" ng-controller="ProfileController">
+        <p ng-if="passwordsNotMatch()" class="text-danger">Passwords Do Not Match!</p>
         <span class="row">
-            <span class="col-lg-3"><label for="username">Username</label></span>
-            <span class="col-lg-3">
-                <input id="username" ng-model="username" />
-            </span>
+            <h1>{{username}}</h1>
         </span>
         <span class="row">
             <span class="col-lg-3"><label for="firstName">First Name</label></span>
             <span class="col-lg-3">
-                <input id="firstName" ng-model="firstName" />
+                <input id="firstName" disabled="disabled" ng-model="firstName" />
             </span>
         </span>
         <span class="row">
             <span class="col-lg-3"><label for="lastName">Last Name</label></span>
             <span class="col-lg-3">
-                <input id="lastName" ng-model="lastName" />
+                <input id="lastName" disabled="disabled" ng-model="lastName" />
             </span>
+        </span>
+        <span class="row">
+            <span class="col-lg-3"><label for="password">Password</label></span>
+            <span class="col-lg-3">
+                <input id="password" type="password" ng-model="password" placeholder="********" />
+            </span>
+        </span>
+        <span class="row">
+            <span class="col-lg-3"><label for="reenter">Re-Enter Password</label></span>
+            <span class="col-lg-3">
+                <input id="reenter" type="password" ng-model="reenter" placeholder="********" />
+            </span>
+        </span>
+        <span class="row">
+            <input type="button" class="btn btn-primary" value="Save" ng-disabled="!canUpdate()" ng-click="updateUser()" />
         </span>
     </section>
 </lift:surround>
