@@ -21,16 +21,28 @@ object RuleCriterion {
 
   def createExpression(config : Config) : RuleExpressionCriterion[_] = {
     val valueType = config.getString("value-type")
+    val operator = RuleExpressionOperator.get(config.getString("operator"))
+    val values = if(operator.requiresList) {
+      getValueListAsType(valueType, config.getStringList("value-list"))
+    } else {
+      getValueAsType(valueType, config.getString("value")) :: Nil
+    }
     new RuleExpressionCriterion(
       config.getString("field"),
-      RuleExpressionOperator.get(config.getString("operator")),
+      operator,
       getConverter(valueType),
-      getValueAsType(valueType, config.getString("value"))
+      values
     )
   }
 
   def getValueAsType(valueType : String, stringValue : String) : T forSome {type T} = valueType.toLowerCase match {
-    case "string" => stringValue
+    case "string" if stringValue != null => stringValue
+    case _ => null
+  }
+
+  def getValueListAsType(valueType : String, stringValue : java.util.List[String]) : List[T forSome{type T}] = valueType.toLowerCase match {
+    case "string" => stringValue.asScala.toList
+    case _ => null
   }
 
   def getConverter(valueType : String) : String => T forSome {type T} = valueType.toLowerCase match {
@@ -53,11 +65,13 @@ class RuleGroupCriterion(combinator : RuleGroupCombinator, criteria : List[RuleC
 
 }
 
-class RuleExpressionCriterion[T](field : String, operator : RuleExpressionOperator[T], converter : String => T, value : T) extends RuleCriterion {
+class RuleExpressionCriterion[T](field : String, operator : RuleExpressionOperator, converter : String => T, valueList : List[T]) extends RuleCriterion {
+
+  val valueToSend = if(operator.requiresList) { valueList } else { valueList.head }
 
   def matches(normalization : Normalization) : Boolean = normalization.fields.get(field) match {
     case Some(normValue) => try {
-      operator.matches(converter(normValue), value)
+      operator.matches(converter(normValue), valueToSend)
     } catch {
       case ex : Exception => false
     }
