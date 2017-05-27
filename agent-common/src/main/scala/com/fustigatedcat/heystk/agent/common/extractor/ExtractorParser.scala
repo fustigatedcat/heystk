@@ -39,7 +39,9 @@ object ExtractorParser extends JavaTokenParsers {
 
   def asFloat : Parser[Extraction] = "AS_FLOAT(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsFloatExtraction(r) }
 
-  def expr : Parser[Extraction] = chainExpr | asString | asInt | asFloat ^^ { case r => r }
+  def asIP : Parser[Extraction] = "AS_IP(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsIPExtraction(r) }
+
+  def expr : Parser[Extraction] = chainExpr | asString | asInt | asFloat | asIP ^^ { case r => r }
 
   def parseOpt(str : String) : Option[Extraction] = parseAll(expr, str) match {
     case Success(res, _) => Some(res)
