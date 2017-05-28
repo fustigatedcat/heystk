@@ -1,5 +1,7 @@
 package com.fustigatedcat.heystk.engine.rule
 
+import java.net.InetAddress
+
 import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.typesafe.config.Config
 
@@ -36,17 +38,26 @@ object RuleCriterion {
   }
 
   def getValueAsType(valueType : String, stringValue : String) : T forSome {type T} = valueType.toLowerCase match {
-    case "string" if stringValue != null => stringValue
+    case "string" => stringValue
+    case "integer" => stringValue.toInt
+    case "float" => stringValue.toFloat
+    case "ip" => InetAddress.getByName(stringValue)
     case _ => null
   }
 
   def getValueListAsType(valueType : String, stringValue : java.util.List[String]) : List[T forSome{type T}] = valueType.toLowerCase match {
     case "string" => stringValue.asScala.toList
+    case "integer" => stringValue.asScala.toList.map(_.toInt)
+    case "float" => stringValue.asScala.toList.map(_.toFloat)
+    case "ip" => stringValue.asScala.toList.map(InetAddress.getByName)
     case _ => null
   }
 
   def getConverter(valueType : String) : ((String, String)) => T forSome {type T} = valueType.toLowerCase match {
     case "string" => t => t._2.toString
+    case "integer" => t => if(t._1 == "integer") { t._2.toInt } else { throw new IllegalArgumentException(s"${t._2} not integer") }
+    case "float" => t => if(t._1 == "float") { t._2.toFloat } else { throw new IllegalArgumentException(s"${t._2} not float") }
+    case "ip" => t => if(t._1 == "ip") { InetAddress.getByName(t._2) } else { throw new IllegalArgumentException(s"${t._2} not ip") }
   }
 
 }
