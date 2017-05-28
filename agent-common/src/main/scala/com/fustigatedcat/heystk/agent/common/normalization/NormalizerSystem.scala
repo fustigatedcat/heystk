@@ -26,11 +26,11 @@ class NormalizerSystem(chains : List[NormalizerChain]) {
 
   def process(log : Log) : Normalization = {
     logger.trace("Beginning normalization")
-    val rtn = chains.foldLeft(Normalization(log, new Date().getTime))((norm, chain) =>
-      chain.process(norm)
-    ).copy(endProcessing = new Date().getTime)
+    val start = new Date()
+    val extractors = chains.foldLeft(Map[String, Extractor]())((n, chain) => n ++ chain.process(log))
+    val norm = Normalization(log, start.getTime, start.getTime, extractors.map(_._2.process(log)))
     logger.trace("Completing normalization")
-    rtn
+    norm.copy(endProcessing = new Date().getTime)
   }
 
 }
