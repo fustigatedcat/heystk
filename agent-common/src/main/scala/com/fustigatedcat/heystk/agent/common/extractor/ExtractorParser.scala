@@ -31,9 +31,19 @@ object ExtractorParser extends JavaTokenParsers {
 
   def operation : Parser[Extraction] = (text | column | regex) ~ ";" ^^ { case r ~ _ => r }
 
-  def expr : Parser[List[Extraction]] = rep(operation) ^^ { case r => r }
+  def chainExpr : Parser[Extraction] = rep(operation) ^^ { case r => new GroupingExtraction(r) }
 
-  def parseOpt(str : String) : Option[List[Extraction]] = parseAll(expr, str) match {
+  def asString : Parser[Extraction] = "AS_STR(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsStringExtraction(r) }
+
+  def asInt : Parser[Extraction] = "AS_INT(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsIntegerExtraction(r) }
+
+  def asFloat : Parser[Extraction] = "AS_FLOAT(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsFloatExtraction(r) }
+
+  def asIP : Parser[Extraction] = "AS_IP(" ~ chainExpr ~ ")" ^^ { case _ ~ r ~ _ => new AsIPExtraction(r) }
+
+  def expr : Parser[Extraction] = asString | asInt | asFloat | asIP | chainExpr  ^^ { case r => r }
+
+  def parseOpt(str : String) : Option[Extraction] = parseAll(expr, str) match {
     case Success(res, _) => Some(res)
     case NoSuccess(msg, _) => {
       logger.error("Failed to parse Extractor {}", msg)

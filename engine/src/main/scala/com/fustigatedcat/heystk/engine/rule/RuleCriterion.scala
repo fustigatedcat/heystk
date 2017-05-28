@@ -45,8 +45,8 @@ object RuleCriterion {
     case _ => null
   }
 
-  def getConverter(valueType : String) : String => T forSome {type T} = valueType.toLowerCase match {
-    case "string" => x => x
+  def getConverter(valueType : String) : ((String, String)) => T forSome {type T} = valueType.toLowerCase match {
+    case "string" => t => t._2.toString
   }
 
 }
@@ -65,7 +65,7 @@ class RuleGroupCriterion(combinator : RuleGroupCombinator, criteria : List[RuleC
 
 }
 
-class RuleExpressionCriterion[T](field : String, operator : RuleExpressionOperator, converter : String => T, valueList : List[T]) extends RuleCriterion {
+class RuleExpressionCriterion[T](field : String, operator : RuleExpressionOperator, converter : ((String, String)) => T, valueList : List[T]) extends RuleCriterion {
 
   val valueToSend = if(operator.requiresList) { valueList } else { valueList.head }
 
