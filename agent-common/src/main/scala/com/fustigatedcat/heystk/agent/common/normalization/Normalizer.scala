@@ -2,7 +2,7 @@ package com.fustigatedcat.heystk.agent.common.normalization
 
 import java.util.regex.Pattern
 
-import com.fustigatedcat.heystk.common.normalization.Normalization
+import com.fustigatedcat.heystk.common.normalization.{Log, Normalization}
 import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 
@@ -27,17 +27,17 @@ class Normalizer(name : String, exp : String, extractors : List[Extractor], chil
 
   val logger = LoggerFactory.getLogger(this.getClass)
 
-  def process(normalization : Normalization) : Normalization = {
-    if(regex.matcher(normalization.log.message).find()) {
+  def process(log : Log) : Map[String, Extractor] = {
+    if(regex.matcher(log.message).find()) {
       logger.trace("Processing normalizer [{}]", name)
-      val rtn = childNormalizers.foldLeft(
-        extractors.foldLeft(normalization)((n, c) => c.process(n)) // parse fields
-      )((n, c) => c.process(n)) // parse children
+      val rtn : Map[String, Extractor] = childNormalizers.foldLeft(
+        extractors.map(e => e.field -> e).toMap[String, Extractor] // handle current extractors
+      )((n, c) => n ++ c.process(log)) // collect child extractors
       logger.trace("Done processing normalizer [{}]", name)
       rtn
     } else {
       logger.trace("Skipping normalizer [{}]", name)
-      normalization
+      Map()
     }
   }
 
