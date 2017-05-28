@@ -7,7 +7,7 @@ class AsIPExtraction(extraction : Extraction) extends Extraction {
   override def process(log: String): (String, String) = {
     val t = extraction.process(log)
     try {
-      val inet = new InetAddress(t._2)
+      val inet = InetAddress.getByName(t._2)
       "ip" -> t._2
     } catch {
       case e : Exception => t
