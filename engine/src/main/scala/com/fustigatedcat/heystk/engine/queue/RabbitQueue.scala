@@ -1,9 +1,7 @@
 package com.fustigatedcat.heystk.engine.queue
 
-import com.fustigatedcat.heystk.common.normalization.Normalization
 import com.fustigatedcat.heystk.engine.Engine
 import com.rabbitmq.client._
-import org.json4s.native.Serialization._
 import org.slf4j.LoggerFactory
 
 object RabbitQueue {
@@ -14,11 +12,7 @@ object RabbitQueue {
 
   val config = Engine.config.getConfig("engine.queue.amqp")
 
-  val apiExchangeName = config.getString("api.exchange-name")
-
   val apiQueueName = config.getString("api.queue-name")
-
-  val toProcessRoutingKey = config.getString("api.routing-key")
 
   val factory = {
     val f = new ConnectionFactory()
@@ -35,9 +29,6 @@ object RabbitQueue {
   val channel = {
     val c = connection.createChannel()
     c.basicQos(1)
-    c.exchangeDeclare(apiExchangeName, BuiltinExchangeType.DIRECT, true, false, null)
-    c.queueDeclare(apiQueueName, true, false, false, null)
-    c.queueBind(apiQueueName, apiExchangeName, toProcessRoutingKey)
     c
   }
 
@@ -45,17 +36,6 @@ object RabbitQueue {
 
   def startConsuming() : Unit= {
     channel.basicConsume(apiQueueName, false, consumer)
-  }
-
-  def postToProcess(normalization : Normalization) = {
-    val norm = write(normalization)
-    logger.debug("Publishing normalization {}", norm)
-    channel.basicPublish(
-      apiExchangeName,
-      toProcessRoutingKey,
-      MessageProperties.PERSISTENT_TEXT_PLAIN,
-      norm.getBytes
-    )
   }
 
 }

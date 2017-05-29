@@ -1,4 +1,4 @@
-database.jdbc.url=jdbc:mysql://localhost:3306/heystk?serverTimezone=UTC
+database.jdbc.url=jdbc:mysql://localhost:3306/heystk?serverTimezone=UTC&useSSL=false
 database.username=root
 database.password=
 database.pool.min=5

@@ -13,13 +13,13 @@ object Rule {
       config.getString("name"),
       config.getBoolean("enabled"),
       RuleCriterion.create(config.getConfig("criterion")),
-      config.getStringList("actions").asScala.toList
+      config.getConfigList("actions").asScala.toList.map(Action.create)
     )
   }
 
 }
 
-class Rule(name : String, enabled : Boolean, criterion : RuleCriterion, val actions : List[String]) {
+class Rule(name : String, enabled : Boolean, criterion : RuleCriterion, val actions : List[Action]) {
 
   val logger = LoggerFactory.getLogger(this.getClass)
 

@@ -16,8 +16,6 @@ object RabbitQueue {
 
   val apiExchangeName = config.getString("api.exchange-name")
 
-  val apiQueueName = config.getString("api.queue-name")
-
   val toProcessRoutingKey = config.getString("api.routing-key")
 
   val factory = {
@@ -32,13 +30,7 @@ object RabbitQueue {
 
   val connection = factory.newConnection()
 
-  val channel = {
-    val c = connection.createChannel()
-    c.exchangeDeclare(apiExchangeName, BuiltinExchangeType.DIRECT, true, false, null)
-    c.queueDeclare(apiQueueName, true, false, false, null)
-    c.queueBind(apiQueueName, apiExchangeName, toProcessRoutingKey)
-    c
-  }
+  val channel = connection.createChannel()
 
   def postToProcess(normalization : Normalization) = {
     val norm = write(normalization)
