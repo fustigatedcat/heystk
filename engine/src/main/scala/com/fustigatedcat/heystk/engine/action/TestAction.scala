@@ -8,10 +8,10 @@ class TestAction(config : Config) extends Action {
 
   val logNormalization = config.getBoolean("log-normalization")
 
-  def execute(normalization : Normalization) = if(logNormalization) {
+  def execute(normalization : Normalization, runtimeConfig : Config) = if(logNormalization) {
     logger.debug("Dropping normalization {}", normalization)
   } else {
-    logger.debug("Dropping normalization UNLOGGED")
+    logger.debug(runtimeConfig.getString("non-match-message"))
   }
 
 }

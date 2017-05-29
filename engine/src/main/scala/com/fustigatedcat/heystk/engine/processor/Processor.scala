@@ -35,8 +35,8 @@ class Processor(rules : List[Rule], actions : Map[String, Action]) {
 
   def process(normalization : Normalization) : Unit = {
     rules.find(_.process(normalization)) match {
-      case Some(rule) => rule.actions.foreach(act => actions.get(act) match {
-        case Some(action) => action.execute(normalization)
+      case Some(rule) => rule.actions.foreach(act => actions.get(act.id) match {
+        case Some(action) => action.execute(normalization, act.config)
         case _ => logger.error("Failed to find action {}", act)
       })
       case _ => logger.info("No rule matched")
